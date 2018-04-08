@@ -6,7 +6,13 @@ public class Hole extends Field {
 	/**
 	 * Kinyitja a lyukat.
 	 */
-	public void Open( ) { isOpen = true; }
+	public void Open( ) {
+		isOpen = true; 
+		//A lyuk kinyitásakor eltünteti a rajta lévõ dolgot
+		if(this.GetThing()!=null) {
+			this.GetThing().Disappear();
+		}
+	}
 	
 	/**
 	 * Bezárja a lyukat.
@@ -19,8 +25,8 @@ public class Hole extends Field {
 	 * @param d Direction típusú, azaz irány, amerre a MovableThing haladna.
 	 * @return boolean típussal tér vissza, amely akkor true, ha elfogadta a MovableThing-et.
 	 */
-	public boolean Accept(MovableThing t, Direction d) {
-		if(super.Accept(t, d)) {
+	public boolean Accept(MovableThing t, Direction d, double s) {
+		if(super.Accept(t, d, s)) {
 			if(isOpen) {
 				t.Disappear();
 			}
@@ -36,8 +42,8 @@ public class Hole extends Field {
 	 * @param d Direction típusú, azaz irány, amerre a MovableThing haladna.
 	 * @return boolean típussal tér vissza, amely akkor true, ha elfogadta a MovableThing-et.
 	 */
-	public boolean DirectAccept(MovableThing t, Direction d) {
-		if(super.DirectAccept(t, d)) {
+	public boolean DirectAccept(MovableThing t, Direction d, double s) {
+		if(super.DirectAccept(t, d, s)) {
 			if(isOpen) {
 				t.Disappear();
 			}

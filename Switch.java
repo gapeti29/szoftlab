@@ -13,8 +13,8 @@ public class Switch extends Field{
 	 * @param d Direction típusú, ebbe az irányba halad a paraméterül kapott objektum.
 	 * @return boolean típussal tér vissza, mely akkor true, ha elfogadta a MovableThing-et.
 	 */
-	public boolean Accept(MovableThing t, Direction d) {
-		if(super.Accept(t, d)){
+	public boolean Accept(MovableThing t, Direction d, double s) {
+		if(super.Accept(t, d, s)){
 			t.ControlSwitch(this);
 			return true;
 		}
@@ -28,8 +28,8 @@ public class Switch extends Field{
 	 * @param d Direction típusú, ebbe az irányba halad a paraméterül kapott objektum.
 	 * @return boolean típussal tér vissza, mely akkor true, ha elfogadta a MovableThing-et.
 	 */
-	public boolean DirectAccept(MovableThing t, Direction d) {
-		if(super.DirectAccept(t, d)){
+	public boolean DirectAccept(MovableThing t, Direction d, double s) {
+		if(super.DirectAccept(t, d, s)){
 			t.ControlSwitch(this);
 			return true;
 		}

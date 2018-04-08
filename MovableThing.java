@@ -5,8 +5,8 @@ public abstract class MovableThing {
 	
 	public abstract void Disappear();
 	public abstract void ControlSwitch(Switch s);
-	public abstract boolean PushedBy(Direction d);
-	public abstract boolean DirectPushedBy(Direction d);
+	public abstract boolean PushedBy(Direction d, double s);
+	public abstract boolean DirectPushedBy(Direction d, double s);
 	public abstract boolean HasMoves();
 	
 	/**
@@ -14,8 +14,8 @@ public abstract class MovableThing {
 	 * @param d Direction típusú, ebbe az irányba mozogna.
 	 * @return boolean típusú, mely akkor true, ha sikeres volt a mozgás.
 	 */
-	public boolean Move(Direction d) {
-		return GetField().GetNeighbour(d).Accept(this, d);
+	public boolean Move(Direction d, double s) {
+		return GetField().GetNeighbour(d).Accept(this, d, s);
 	}
 	
 	/**

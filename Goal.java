@@ -9,8 +9,8 @@ public class Goal extends Field {
 	 * @param d Direction típusú, ebbe az irányba halad a paraméterül kapott objektum.
 	 * @return boolean típussal tér vissza, amely akkor true, ha elfogadta a MovableThing-et.
 	 */
-	public boolean Accept(MovableThing t, Direction d) {
-		if(super.Accept(t, d)) {
+	public boolean Accept(MovableThing t, Direction d, double s) {
+		if(super.Accept(t, d, s)) {
 			//Meghívja a célmezõre érést kezelõ függvényét.
 			t.AtGoal(this);
 			return true;
@@ -23,6 +23,6 @@ public class Goal extends Field {
 	 * Az aktuálisan soron lévõ játékos betolt egy ládát a célmezõre, ezért õ kap egy plusz pontot.
 	 */
 	public void CrateDelivered() {
-		Game.GetCurrentWorker().AddPoint();
+		Game.AddPointToWorker();
 	}
 }

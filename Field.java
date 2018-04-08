@@ -7,11 +7,8 @@ public class Field {
 	private MovableThing thing;
 	private Map<Direction, Field> neighbours = new HashMap<Direction, Field>();
 	private Warehouse warehouse;
-	
-	/*Pálya létrehozására.
-	 *Extra mezõ az, amelyen már van MovableThing, vagy pedig a Field leszármazottja. 
-	 */
-	private boolean extra = false;
+	private Material material;
+	private double cohesion;
 	
 	/**
 	 * A paraméterül kapott objektumot elfogadja, ha tudja.
@@ -19,10 +16,10 @@ public class Field {
 	 * @param d Direction típusú, ebbe az irányba halad a paraméterül kapott objektum.
 	 * @return boolean típussal tér vissza, mely akkor true, ha elfogadta a mezõ az objektumot.
 	 */
-	public boolean Accept(MovableThing t, Direction d) {
+	public boolean Accept(MovableThing t, Direction d, double s) {
 		if(thing != null) {
 			//Ha sikerült arrébb tolni a mezõn lévõ dolgot.
-			if(thing.PushedBy(d)){
+			if(thing.PushedBy(d, s)){
 				Accepted(t);
 				return true;
 			}
@@ -41,10 +38,10 @@ public class Field {
 	 * @param d Direction típusú, ebbe az irányba halad a paraméterül kapott objektum.
 	 * @return boolean típussal tér vissza, mely akkor true, ha elfogadta a mezõ az objektumot.
 	 */
-	public boolean DirectAccept(MovableThing t, Direction d) {
+	public boolean DirectAccept(MovableThing t, Direction d, double s) {
 		if(thing != null) {
 			//Ha sikerült arrébb tolni a mezõn lévõ dolgot.
-			if(thing.DirectPushedBy(d)){
+			if(thing.DirectPushedBy(d, s)){
 				Accepted(t);
 				return true;
 			}
@@ -116,23 +113,25 @@ public class Field {
 	public void SetWarehouse(Warehouse w) { warehouse = w; }
 	
 	/**
-	 * Megadja, hogy az adott mezõ extra-e.
-	 * Extra mezõnek számít az a mezõ, melyen már van MovableThing, vagy pedig a Field leszármazottja.
-	 * @return boolean típussal tér vissza, mely akkor true, ha extra a mezõ.
+	 * Visszaadja a mezõn lévõ dolgot.
+	 * @return MovableThing típussal tér vissza.
 	 */
-	public boolean IsExtra() {
-		if(extra)
-			return true;
-		else
-			return false;
+	public MovableThing GetThing() { return thing; }
+	
+	/**
+	 * A munkás tolóerejét csökkenti a mezõ súrlódási erejével.
+	 * @param s double típusú, ez a tolóerõ
+	 * @return double típussal tér vissza, melynek értéke a fenn maradó tolóerõ.
+	 */
+	public double ApplyCohesion(double s) {
+		return s - cohesion;
 	}
 	
 	/**
-	 * Extra mezõvé állítja be a mezõt.
+	 * Eltárolja a paraméterül kapott anyagot.
+	 * @param m Material típusú, ez az anyag lesz a mezõn.
 	 */
-	public void MakeExtra() {
-		extra = true;
-	}
+	public void SetMaterial(Material m) { material = m; }
 	
 	/**
 	 * Ellenõrzi, hogy van-e érvényes lépés a paraméterül kapott irányba.

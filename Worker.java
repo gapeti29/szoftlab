@@ -1,8 +1,12 @@
 package sokoban;
 
 public class Worker extends MovableThing{
-	private int points;
+	private int points = 0;
 	private String name;
+	private double strength = 1.1; //Random érték...
+	private int materialCount;
+	
+	public Worker(String s) { name = s; }
 	
 	/**
 	 * A munkás pontszámának eggyel növelése.
@@ -10,12 +14,24 @@ public class Worker extends MovableThing{
 	public void AddPoint() { ++points; }
 	
 	/**
+	 * Visszaadja a játékos pontjainak a számát.
+	 * @return int típussal tér vissza.
+	 */
+	public int GetPoints() { return points; }
+	
+	/**
+	 * Visszaadja a játékos nevét.
+	 * @return String típussal tér vissza.
+	 */
+	public String GetName() { return name; }
+	
+	/**
 	 * A munkás megpróbál az adott irányba lépni (direktben, nem tolják).
 	 * @param d Direction típusú, ebbe az irányba haladna.
 	 * @return boolean típussal tér vissza, mely akkor true, ha sikerült a mozgás.
 	 */
-	public boolean DirectMove(Direction d) {
-		if(GetField().GetNeighbour(d).DirectAccept(this, d))
+	public boolean DirectMove(Direction d, double s) {
+		if(GetField().GetNeighbour(d).DirectAccept(this, d, s))
 		{
 			return true;
 		}
@@ -27,8 +43,8 @@ public class Worker extends MovableThing{
 	 * Egy irányt vár a felhasználótól, majd abba az irányba megpróbál lépni.
 	 */
 	public void Step() {
-		//Szkeletonban csak jobbra lép a munkás
-		DirectMove(Direction.Right);
+		//Fejl. alatt...
+		DirectMove(Direction.Right, strength);
 	}
 	
 	/**
@@ -53,8 +69,8 @@ public class Worker extends MovableThing{
 	 * @param d Direction típusú, ebbe az irányba mozogna.
 	 * @return boolean típussal tér vissza, mely különbözõ okokból, de mindig true lesz.
 	 */
-	public boolean PushedBy(Direction d) {
-		if(!Move(d)) {
+	public boolean PushedBy(Direction d, double s) {
+		if(!Move(d, s)) {
 			Disappear();
 		}
 		
@@ -65,8 +81,29 @@ public class Worker extends MovableThing{
 	 * A munkást nem lehet direktben eltolni, ezért mindig false értékkel tér vissza.
 	 * @return boolean típussal tér vissza.
 	 */
-	public boolean DirectPushedBy(Direction d) {
+	public boolean DirectPushedBy(Direction d, double s) {
 		return false;
+	}
+	
+	/**
+	 * A játékos által kiválasztott anyagot helyezi arra a mezõre, amelyen éppen áll.
+	 * A lerakás feltétele az, hogy még nem fogyott ki a munkás az anyagokból.
+	 */
+	public void PutMaterial() {
+		//Beolvasás...
+		
+		if(materialCount > 0) {
+			//Beolvasott érték vizsgálata lesz majd az if feltétel belsejében...
+			if("1" == "Oil") {
+				Oil oil = new Oil();
+				oil.PutOn(GetField());
+			}
+			else {
+				Honey honey = new Honey();
+				honey.PutOn(GetField());
+			}
+			--materialCount;
+		}
 	}
 	
 	/**
