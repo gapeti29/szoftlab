@@ -7,6 +7,44 @@ public class Warehouse {
 	private Field[][] fields = new Field[rowSize][columnSize];
 	private Crate[] crates;
 	
+	/**
+	 * Visszaadja, hogy hány sorból áll a pálya.
+	 * @return int típussal tér vissza.
+	 */
+	public int GetRowSize() { return rowSize; }
+	
+	/**
+	 * Visszaadja, hogy hány oszlopból áll a pálya.
+	 * @return int típussal tér vissza.
+	 */
+	public int GetColumnSize() { return columnSize; }
+	
+	/**
+	 * Visszaadja a paraméterek által meghatározott helyen lévõ mezõt.
+	 * @param i int típusú, ebben a sorban van a mezõ.
+	 * @param j int típusú, ebben az oszlopban van a mezõ.
+	 * @return Field típussal tér vissza.
+	 */
+	public Field GetField(int i, int j) { return fields[i][j]; }
+	
+	/**
+	 * A paraméterül kapott ládát a ládákat tartalmazó tömb végére szúrja.
+	 * @param c Crate típusú.
+	 */
+	public void AddCrate(Crate c) {
+		if(crates == null) {
+			crates = new Crate[1];
+			crates[0] = c;
+		}
+		else {
+			Crate[] temp = new Crate[crates.length + 1];
+			for(int i = 0; i < crates.length; ++i) {
+				temp[i] = crates[i];
+			}
+			temp[crates.length] = c;
+			crates = temp;
+		}
+	}
 	
 	/**
 	 * Megadja a raktárban lévõ ládák számát.
@@ -51,79 +89,39 @@ public class Warehouse {
 		for(int i = 0; i < rowSize; ++i) {
 			for(int j = 0; j < columnSize; ++j) {
 				//A mezõ szomszédainak beállítása
-				SetUpperNeighbour(fields[i][j], i, j);
-				SetLowerNeighbour(fields[i][j], i, j);
-				SetLeftNeighbour(fields[i][j], i, j);
-				SetRightNeighbour(fields[i][j], i, j);
+				try {
+					fields[i][j].SetNeighbour(fields[i-1][j], Direction.Up);
+					fields[i-1][j].SetNeighbour(fields[i][j], Direction.Down);
+				} catch(NullPointerException e) {
+					//Nem csinál semmit.
+				} catch(ArrayIndexOutOfBoundsException out) {
+					//Nem csinál semmit.
+				}
+				try {
+					fields[i][j].SetNeighbour(fields[i+1][j], Direction.Down);
+					fields[i+1][j].SetNeighbour(fields[i][j], Direction.Up);
+				} catch(NullPointerException e) {
+					//Nem csinál semmit.
+				} catch(ArrayIndexOutOfBoundsException out) {
+					//Nem csinál semmit.
+				}
+				try {
+					fields[i][j].SetNeighbour(fields[i][j-1], Direction.Left);
+					fields[i][j-1].SetNeighbour(fields[i][j], Direction.Right);
+				} catch(NullPointerException e) {
+					//Nem csinál semmit.
+				} catch(ArrayIndexOutOfBoundsException out) {
+					//Nem csinál semmit.
+				}
+				try {
+					fields[i][j].SetNeighbour(fields[i][j+1], Direction.Right);
+					fields[i][j+1].SetNeighbour(fields[i][j], Direction.Left);
+				} catch(NullPointerException e) {
+					//Nem csinál semmit.
+				} catch(ArrayIndexOutOfBoundsException out) {
+					//Nem csinál semmit.
+				}
 			}
-		}
-	}
-	
-	/**
-	 * A megadott helyû mezõ eltárolja felsõ szomszédként a felette lévõ mezõt, míg az eltárolja õt alsó szomszédként.
-	 * @param f Field típusú, ehhez a mezõhöz viszonyítunk. Õ lesz az alsó szomszéd.
-	 * @param i int típusú, ebben a sorban van az f.
-	 * @param j int típusú, ebben az oszlopban van az f.
-	 */
-	private void SetUpperNeighbour(Field f, int i, int j) {
-		try {
-			f.SetNeighbour(fields[i-1][j], Direction.Up);
-			fields[i-1][j].SetNeighbour(f, Direction.Down);
-		} catch(NullPointerException e) {
-			//Nem csinál semmit.
-		} catch(ArrayIndexOutOfBoundsException out) {
-			//Nem csinál semmit.
-		}
-	}
-	
-	/**
-	 * A megadott helyû mezõ eltárolja alsó szomszédként az alatta lévõ mezõt, míg az eltárolja õt felsõ szomszédként.
-	 * @param f Field típusú, ehhez a mezõhöz viszonyítunk. Õ lesz a felsõ szomszéd.
-	 * @param i int típusú, ebben a sorban van az f.
-	 * @param j int típusú, ebben az oszlopban van az f.
-	 */
-	private void SetLowerNeighbour(Field f, int i, int j) {
-		try {
-			f.SetNeighbour(fields[i+1][j], Direction.Down);
-			fields[i+1][j].SetNeighbour(f, Direction.Up);
-		} catch(NullPointerException e) {
-			//Nem csinál semmit.
-		} catch(ArrayIndexOutOfBoundsException out) {
-			//Nem csinál semmit.
-		}
-	}
-	
-	/**
-	 * A megadott helyû mezõ eltárolja baloldali szomszédként a tõle balra lévõ mezõt, míg az eltárolja õt jobboldali szomszédként.
-	 * @param f Field típusú, ehhez a mezõhöz viszonyítunk. Õ lesz a jobboldali szomszéd.
-	 * @param i int típusú, ebben a sorban van az f.
-	 * @param j int típusú, ebben az oszlopban van az f.
-	 */
-	private void SetLeftNeighbour(Field f, int i, int j) {
-		try {
-			f.SetNeighbour(fields[i][j-1], Direction.Left);
-			fields[i][j-1].SetNeighbour(f, Direction.Right);
-		} catch(NullPointerException e) {
-			//Nem csinál semmit.
-		} catch(ArrayIndexOutOfBoundsException out) {
-			//Nem csinál semmit.
-		}
-	}
-	
-	/**
-	 * A megadott helyû mezõ eltárolja jobboldali szomszédként a tõle jobbra lévõ mezõt, míg az eltárolja õt baloldali szomszédként.
-	 * @param f Field típusú, ehhez a mezõhöz viszonyítunk. Õ lesz a baololdali szomszéd.
-	 * @param i int típusú, ebben a sorban van az f.
-	 * @param j int típusú, ebben az oszlopban van az f.
-	 */
-	private void SetRightNeighbour(Field f, int i, int j) {
-		try {
-			f.SetNeighbour(fields[i][j+1], Direction.Right);
-			fields[i][j+1].SetNeighbour(f, Direction.Left);
-		} catch(NullPointerException e) {
-			//Nem csinál semmit.
-		} catch(ArrayIndexOutOfBoundsException out) {
-			//Nem csinál semmit.
 		}
 	}
 	

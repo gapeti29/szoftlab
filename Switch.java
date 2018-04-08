@@ -3,9 +3,11 @@ package sokoban;
 public class Switch extends Field{
 	private Hole holes;
 	
-	public Switch(Hole h) {
-		holes = h;
-	}
+	/**
+	 * A paraméterül kapott lyukat tudja majd állítani.
+	 * @param h Hole típusú.
+	 */
+	public void SetHole(Hole h) { holes = h; }
 	
 	/**
 	 * Megpróbálja elfogadni a mezõre érkezõ MovableThing típusú objektumot, és meghívja annak a kapcsoló kezelõ függvényét, ha elfogadta.

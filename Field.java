@@ -119,10 +119,16 @@ public class Field {
 	public MovableThing GetThing() { return thing; }
 	
 	/**
+	 * A paraméterül kapott dolgot eltárolja a mezõ.
+	 * @param t MovableThing típusú.
+	 */
+	public void SetThing(MovableThing t) { thing = t; }
+	
+	/**
 	 * A munkás tolóerejét csökkenti a mezõ súrlódási erejével.
 	 * @param s double típusú, ez a tolóerõ
 	 * @return double típussal tér vissza, melynek értéke a fenn maradó tolóerõ.
-	 */
+	 */	
 	public double ApplyCohesion(double s) {
 		return s - cohesion;
 	}
