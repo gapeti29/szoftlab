@@ -1,8 +1,17 @@
-package sokoban;
+
 
 public class Hole extends Field {
 	private boolean isOpen;
 	
+	public Hole(Field f){
+		this.SetMaterial(f.GetMaterial());
+		this.SetNeighbour(f.GetNeighbour(Direction.Up), Direction.Up);
+		this.SetNeighbour(f.GetNeighbour(Direction.Down), Direction.Down);
+		this.SetNeighbour(f.GetNeighbour(Direction.Left), Direction.Left);
+		this.SetNeighbour(f.GetNeighbour(Direction.Right), Direction.Right);
+		this.SetThing(f.GetThing());
+		this.SetWarehouse(f.GetWarehouse());
+	}
 	/**
 	 * Kinyitja a lyukat.
 	 */

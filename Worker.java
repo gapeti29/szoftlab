@@ -1,4 +1,4 @@
-package sokoban;
+
 
 public class Worker extends MovableThing{
 	private int points = 0;
@@ -6,7 +6,9 @@ public class Worker extends MovableThing{
 	private double strength = 1.1; //Random érték...
 	private int materialCount;
 	
-	public Worker(String s) { name = s; }
+	public Worker(String s,int material) { name = s; materialCount=material;}
+	
+	public Worker(String s) { name = s;}
 	
 	/**
 	 * A munkás pontszámának eggyel növelése.
@@ -24,6 +26,9 @@ public class Worker extends MovableThing{
 	 * @return String típussal tér vissza.
 	 */
 	public String GetName() { return name; }
+	
+	
+	public double GetStrenght() { return strength; }
 	
 	/**
 	 * A munkás megpróbál az adott irányba lépni (direktben, nem tolják).

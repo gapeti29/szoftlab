@@ -1,7 +1,15 @@
-package sokoban;
 
 public class Switch extends Field{
 	private Hole holes;
+	public Switch(Field f){
+		this.SetMaterial(f.GetMaterial());
+		this.SetNeighbour(f.GetNeighbour(Direction.Up), Direction.Up);
+		this.SetNeighbour(f.GetNeighbour(Direction.Down), Direction.Down);
+		this.SetNeighbour(f.GetNeighbour(Direction.Left), Direction.Left);
+		this.SetNeighbour(f.GetNeighbour(Direction.Right), Direction.Right);
+		this.SetThing(f.GetThing());
+		this.SetWarehouse(f.GetWarehouse());
+	}
 	
 	/**
 	 * A paraméterül kapott lyukat tudja majd állítani.

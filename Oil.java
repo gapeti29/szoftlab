@@ -1,4 +1,3 @@
-package sokoban;
 
 public class Oil extends Material {
 	private static final double cohesion = 0.5;

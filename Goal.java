@@ -1,6 +1,14 @@
-package sokoban;
 
 public class Goal extends Field {
+	public Goal(Field f){
+		this.SetMaterial(f.GetMaterial());
+		this.SetNeighbour(f.GetNeighbour(Direction.Up), Direction.Up);
+		this.SetNeighbour(f.GetNeighbour(Direction.Down), Direction.Down);
+		this.SetNeighbour(f.GetNeighbour(Direction.Left), Direction.Left);
+		this.SetNeighbour(f.GetNeighbour(Direction.Right), Direction.Right);
+		this.SetThing(f.GetThing());
+		this.SetWarehouse(f.GetWarehouse());
+	}
 	
 	/**
 	 * Megpróbálja elfogadni a mezõre érkezõ MovableThing típusú objektumot.

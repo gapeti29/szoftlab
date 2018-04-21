@@ -1,4 +1,4 @@
-package sokoban;
+
 
 public class Honey extends Material {
 	private static final double cohesion = 0.5;

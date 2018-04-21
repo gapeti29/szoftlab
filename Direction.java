@@ -1,4 +1,3 @@
-package sokoban;
 
 public enum Direction {
 	Up,

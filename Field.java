@@ -1,4 +1,4 @@
-package sokoban;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +9,7 @@ public class Field {
 	private Warehouse warehouse;
 	private Material material;
 	private double cohesion;
+	private String name;
 	
 	/**
 	 * A paraméterül kapott objektumot elfogadja, ha tudja.
@@ -16,6 +17,13 @@ public class Field {
 	 * @param d Direction típusú, ebbe az irányba halad a paraméterül kapott objektum.
 	 * @return boolean típussal tér vissza, mely akkor true, ha elfogadta a mezõ az objektumot.
 	 */
+	public Field() {
+		neighbours.put(Direction.Up, null);
+		neighbours.put(Direction.Down, null);
+		neighbours.put(Direction.Left, null);
+		neighbours.put(Direction.Right, null);
+	}
+	public Field(String azzonisito) {name=azzonisito;}
 	public boolean Accept(MovableThing t, Direction d, double s) {
 		if(thing != null) {
 			//Ha sikerült arrébb tolni a mezõn lévõ dolgot.
@@ -138,6 +146,8 @@ public class Field {
 	 * @param m Material típusú, ez az anyag lesz a mezõn.
 	 */
 	public void SetMaterial(Material m) { material = m; }
+	public Material GetMaterial() {return material;}
+	public double getCohesion() {return cohesion;}
 	
 	/**
 	 * Ellenõrzi, hogy van-e érvényes lépés a paraméterül kapott irányba.
@@ -145,15 +155,15 @@ public class Field {
 	 * @return
 	 */
 	public boolean CheckMove(Direction d) {
-		if(thing != null) {
+		if(GetNeighbour(d)!=null) {
 			if(GetNeighbour(d).CheckMove(d)) {
 				return true;
 			}
-			
 			return false;
 		}
 		else {
 			return true;
 		}
 	}
+	public String getName() {return name;}
 }

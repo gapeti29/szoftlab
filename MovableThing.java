@@ -1,4 +1,4 @@
-package sokoban;
+
 
 public abstract class MovableThing {
 	Field field;

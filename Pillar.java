@@ -1,6 +1,15 @@
-package sokoban;
+
 
 public class Pillar extends Field {
+	public Pillar(Field f){
+		this.SetMaterial(f.GetMaterial());
+		this.SetNeighbour(f.GetNeighbour(Direction.Up), Direction.Up);
+		this.SetNeighbour(f.GetNeighbour(Direction.Down), Direction.Down);
+		this.SetNeighbour(f.GetNeighbour(Direction.Left), Direction.Left);
+		this.SetNeighbour(f.GetNeighbour(Direction.Right), Direction.Right);
+		this.SetThing(f.GetThing());
+		this.SetWarehouse(f.GetWarehouse());
+	}
 	/**
 	 * Nem fogad el semmit ez a mezõ.
 	 */
