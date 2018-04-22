@@ -32,7 +32,7 @@ public class Menu {
 		if(split[0].compareTo("setOil")==0&&split.length==2){setOil(split[1]);}
 		if(split[0].compareTo("setHoney")==0&&split.length==2){setHoney(split[1]);}
 		if(split[0].compareTo("setField")==0&&split.length==2){setField(split[1]);}
-		if(split[0].compareTo("setGoal")==0&&split.length==2){setField(split[1]);}
+		if(split[0].compareTo("setGoal")==0&&split.length==2){setGoal(split[1]);}
 		if(split[0].compareTo("setPillar")==0&&split.length==2){setPillar(split[1]);}
 		if(split[0].compareTo("setHole")==0&&split.length==3){setHole(split[1],split[2]);}
 		if(split[0].compareTo("setSwitch")==0&&split.length==4){setSwitch(split[1],split[2],split[3]);}
