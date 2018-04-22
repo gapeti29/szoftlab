@@ -1,3 +1,5 @@
+package sokoban;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -57,9 +59,9 @@ public class Menu {
 		    }
 			br.close();
 			} catch (FileNotFoundException e) {
-				System.out.print("Nem létezik ilyen file!!!!");
+				System.out.print("Nem lÃ©tezik ilyen file!!!!");
 			}catch(NullPointerException e) {
-				//System.out.print("Üres sor!!!!");
+				//System.out.print("Ãœres sor!!!!");
 			}
 	}
 	public static void drawMap() {}
