@@ -1,3 +1,4 @@
+package sokoban;
 
 
 public class Hole extends Field {
@@ -11,6 +12,10 @@ public class Hole extends Field {
 		this.SetNeighbour(f.GetNeighbour(Direction.Right), Direction.Right);
 		this.SetThing(f.GetThing());
 		this.SetWarehouse(f.GetWarehouse());
+	}
+	public Hole(String name1,boolean open_close) {
+		name=name1;
+		isOpen=open_close;
 	}
 	/**
 	 * Kinyitja a lyukat.
@@ -60,5 +65,9 @@ public class Hole extends Field {
 		}
 		else
 			return false;
+	}
+	public void List() {
+		if(isOpen)	System.out.println(this.getName()+"	Nyitva");
+		else		System.out.println(this.getName()+"	Zárva");
 	}
 }

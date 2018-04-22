@@ -1,3 +1,4 @@
+package sokoban;
 
 public class Switch extends Field{
 	private Hole holes;
@@ -11,6 +12,13 @@ public class Switch extends Field{
 		this.SetWarehouse(f.GetWarehouse());
 	}
 	
+	public Switch(String name1,boolean on_off,String holes1) {
+		name=name1;
+		if(on_off)this.TurnOn();
+		else this.TurnOff();
+		holes=(Hole) this.GetWarehouse().findField(holes1);
+	}
+
 	/**
 	 * A paraméterül kapott lyukat tudja majd állítani.
 	 * @param h Hole típusú.
@@ -56,4 +64,13 @@ public class Switch extends Field{
 	 * Becsukja a kapcsolóhoz tartozó lyukat.
 	 */
 	public void TurnOff() { holes.Close(); }
+	public void List() {
+		if(holes==null) {
+			System.out.println(this.getName()+"	Nem tartozik hozzá lyuk");
+		}
+		else {
+			if(this.GetThing()==null)	System.out.println(this.getName()+"A hozza tartozo lyuk"+holes.getName()+":	Zárva");
+			else						System.out.println(this.getName()+"A hozza tartozo lyuk"+holes.getName()+"	Nyitva");
+		}
+	}
 }

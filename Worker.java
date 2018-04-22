@@ -1,3 +1,4 @@
+package sokoban;
 
 
 public class Worker extends MovableThing{

@@ -1,3 +1,4 @@
+package sokoban;
 import java.util.ArrayList;
 
 public class Warehouse {
@@ -34,8 +35,8 @@ public class Warehouse {
 	 * @param i int típusú, a sor száma.
 	 * @param j int típusú, az oszlop száma.
 	 */
-	public void AddField(String name) {
-		fields.add(new Field(name));
+	public void AddField(Field name) {
+		fields.add(name);
 	}
 	
 	
@@ -78,6 +79,11 @@ public class Warehouse {
 	public void listCohesion() {
 		for(Field f:fields) {
 			System.out.println(f.getName()+": "+f.getCohesion());
+		}
+	}
+	public void listFieldState() {
+		for(Field f:fields) {
+			f.List();
 		}
 	}
 }

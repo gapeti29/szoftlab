@@ -1,3 +1,4 @@
+package sokoban;
 
 public class Goal extends Field {
 	public Goal(Field f){
@@ -10,6 +11,10 @@ public class Goal extends Field {
 		this.SetWarehouse(f.GetWarehouse());
 	}
 	
+	public Goal(String name1) {
+		name=name1;
+	}
+
 	/**
 	 * Megpróbálja elfogadni a mezõre érkezõ MovableThing típusú objektumot.
 	 * Ha sikerült, akkor meghívja annak a célmezõre érkezést kezelõ függvényét.

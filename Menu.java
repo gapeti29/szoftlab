@@ -1,3 +1,4 @@
+package sokoban;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -5,22 +6,22 @@ public class Menu {
 	static Game game;
 	static ArrayList<String> commands;
 	public static void main(String[] args) throws IOException {
+		System.out.println("Adj meg egy parancsot!");
 		game=new Game();
 		commands = new ArrayList<String>();
 		Game.CreateMap();
 		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
 		while(true) {
 			String input=reader.readLine();
-			commands.add(input);
 			String[] line=input.split(",");
+			if(line[0].compareTo("loadMap")==0||line[0].compareTo("saveMap")==0) {}
+			else {
+				commands.add(input);
+			}
 			menu(line);
 		}
 	}
 	private static void menu(String[] split) throws IOException {
-		/*for(String s:split) {
-			System.out.println(s);
-		}
-		System.out.println(split.length);*/
 		if(split[0].compareTo("loadMap")==0&&split.length==2){loadMap(split[1]);}
 		if(split[0].compareTo("saveMap")==0&&split.length==2){saveMap(split[1]);}
 		if(split[0].compareTo("moveWorker")==0&&split.length==3){moveWorker(split[2]);}
@@ -32,11 +33,14 @@ public class Menu {
 		if(split[0].compareTo("setHoney")==0&&split.length==1){setHoney();}
 		if(split[0].compareTo("setField")==0&&split.length==2){setField(split[1]);}
 		if(split[0].compareTo("setPillar")==0&&split.length==2){setPillar(split[1]);}
+		if(split[0].compareTo("setHole")==0&&split.length==3){setHole(split[1],split[2]);}
+		if(split[0].compareTo("setSwitch")==0&&split.length==3){setSwitch(split[1],split[2],split[3]);}
 		if(split[0].compareTo("listFieldStates")==0&&split.length==1){listFieldStates();}
 		if(split[0].compareTo("listBox")==0&&split.length==1){listBox();}
 		if(split[0].compareTo("listRound")==0&&split.length==1){listRound();}
 		if(split[0].compareTo("listCohesion")==0&&split.length==1){listCohesion();}
 		if(split[0].compareTo("listPoints")==0&&split.length==1){listPoints();}
+		if(split[0].compareTo("pass")==0&&split.length==1){pass();}
 	}
 	public static void loadMap(String file) throws IOException,NullPointerException {
 		System.out.println(System.getProperty("user.dir"));
@@ -68,10 +72,10 @@ public class Menu {
 	    pw.close();
 	}
 	public static void moveWorker(String direction) {
-		if(direction.compareTo("up")==0)		game.currentPlayer().DirectMove(Direction.Up, game.currentPlayer().GetStrenght());
-		if(direction.compareTo("down")==0)		game.currentPlayer().DirectMove(Direction.Down, game.currentPlayer().GetStrenght());
-		if(direction.compareTo("left")==0)		game.currentPlayer().DirectMove(Direction.Left, game.currentPlayer().GetStrenght());
-		if(direction.compareTo("right")==0)		game.currentPlayer().DirectMove(Direction.Right, game.currentPlayer().GetStrenght());
+		if(direction.compareTo("Up")==0)		game.currentPlayer().DirectMove(Direction.Up, game.currentPlayer().GetStrenght());
+		if(direction.compareTo("Down")==0)		game.currentPlayer().DirectMove(Direction.Down, game.currentPlayer().GetStrenght());
+		if(direction.compareTo("Left")==0)		game.currentPlayer().DirectMove(Direction.Left, game.currentPlayer().GetStrenght());
+		if(direction.compareTo("Right")==0)		game.currentPlayer().DirectMove(Direction.Right, game.currentPlayer().GetStrenght());
 		Game.NextRound();
 	}
 	public static void canPush() {
@@ -80,10 +84,10 @@ public class Menu {
 		{System.out.println("No");}
 	}
 	public static void setNeighbour(String name, String neighbour_name,String direction) {
-		if(direction.compareTo("up")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Up);
-		if(direction.compareTo("down")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Down);
-		if(direction.compareTo("left")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Left);
-		if(direction.compareTo("right")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Right);
+		if(direction.compareTo("Up")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Up);
+		if(direction.compareTo("Down")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Down);
+		if(direction.compareTo("Left")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Left);
+		if(direction.compareTo("Right")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Right);
 	}
 	public static void setWorker(String name,String field,String material) {
 		int converted_material=Integer.parseInt(material);
@@ -105,22 +109,34 @@ public class Menu {
 		game.currentPlayer().GetField().SetMaterial(new Honey());
 	}
 	public static void setField(String name) {
-		game.addField(name);
+		game.addField(new Field(name));
 	}
 	public static void setPillar(String name) {
-		new Pillar(game.findField(name));
+		game.addField(new Pillar(name));
 	}
 	public static void setGoal(String name) {
-		game.addField(name);
+		game.addField(new Goal(name));
 	}
-	public static void setHole(String name) {
-		game.addField(name);
+	public static void setHole(String name,String state) {
+		if(state.compareTo("closed")==0)
+			game.addField(new Hole(name,false));
+		else
+		if(state.compareTo("open")==0)
+			game.addField(new Hole(name,true));
+		else
+			game.addField(new Hole(name,false));
 	}
-	public void setSwitch(String name) {
-		game.addField(name);
+	public static void setSwitch(String name,String state,String hole) {
+		if(state.compareTo("off")==0)
+			game.addField(new Switch(name,false,hole));
+		else
+		if(state.compareTo("on")==0)
+			game.addField(new Switch(name,true,hole));
+		else
+			game.addField(new Switch(name,false,hole));
 	}
 	public static void listFieldStates() {
-		
+		game.listFieldState();
 	}
 	public static void listBox() {
 		game.listBox();

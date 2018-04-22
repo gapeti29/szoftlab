@@ -1,4 +1,4 @@
-
+package sokoban;
 import java.util.ArrayList;
 
 public final class Game {
@@ -20,7 +20,7 @@ public final class Game {
 	public boolean canPush() {
 		return map.HasMoves(workers);
 	}
-	public void addField(String name) {
+	public void addField(Field name) {
 		map.AddField(name);
 	}
 	public void addWorker(Worker w) {
@@ -75,7 +75,7 @@ public final class Game {
 	}
 	public void listPoints() {
 		for(Worker w: workers) {
-			System.out.println(w.GetName()+": "+w.GetPoints());
+			System.out.println("Player: "+w.GetName()+"	Field: "+w.GetField().getName()+" Points: "+w.GetPoints());
 		}
 	}
 	public void listRound() {
@@ -98,6 +98,9 @@ public final class Game {
 	}
 	public void listCohesion() {
 		map.listCohesion();
+	}
+	public void listFieldState() {
+		map.listFieldState();
 	}
 
  }

@@ -1,3 +1,4 @@
+package sokoban;
 
 
 import java.util.HashMap;
@@ -9,7 +10,7 @@ public class Field {
 	private Warehouse warehouse;
 	private Material material;
 	private double cohesion;
-	private String name;
+	protected String name;
 	
 	/**
 	 * A paraméterül kapott objektumot elfogadja, ha tudja.
@@ -166,4 +167,5 @@ public class Field {
 		}
 	}
 	public String getName() {return name;}
+	public void List() {}
 }

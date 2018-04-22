@@ -1,3 +1,4 @@
+package sokoban;
 
 
 public abstract class MovableThing {
