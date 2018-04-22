@@ -99,13 +99,11 @@ public class Worker extends MovableThing{
 	 * @return boolean tipussal ter vissza, mely kulonbozo okokbol, de mindig true lesz.
 	 */
 	public boolean PushedBy(Direction d, double s) {
-		s = s-(this.GetField().getCohesion());
-		if(s > 0) {
-			return true;
+		if(!Move(d, s)) {
+			Disappear();
 		}
-		else {
-			return false;
-		}
+		
+		return true;
 	}
 	
 	/**
