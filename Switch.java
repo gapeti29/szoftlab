@@ -12,6 +12,14 @@ public class Switch extends Field{
 	 * A kapcsolohoz tartozo lyuk, amelyet iranyitani tud.
 	 */
 	private Hole holes;
+	/**
+	 * A kapcsolohoz tartozo lyuk neve.
+	 */
+	private String hole_name;
+	/**
+	 * Ki van-e nyitva a lyuk.
+	 */
+	private boolean active;
 
 	/**
 	 * A parameterul megadott nevvel letrehoz egy kapcsolot, beallitja hozza a lyukat, amit kinyit, vagy bezar.
@@ -21,9 +29,27 @@ public class Switch extends Field{
 	 */
 	public Switch(String name1,boolean on_off,String holes1) {
 		name=name1;
-		holes=(Hole) this.GetWarehouse().findField(holes1);
+		hole_name = holes1;
+		active = on_off;		
+	}
+	
+	/**
+	 * A kapcsolohoz tartozo lyukat kinyitja, vagy becsukja.
+	 * @param on_off
+	 */
+	public void Activate(boolean on_off) {
+		holes = (Hole) this.GetWarehouse().findField(hole_name);
 		if(on_off)this.TurnOn();
 		else this.TurnOff();
+	}
+	
+	/**
+	 * A kapott Warehouse referenciat eltarolja.
+	 * @param w Warehouse tipusu.
+	 */
+	public void SetWarehouse(Warehouse w) {
+		super.SetWarehouse(w);
+		Activate(active);
 	}
 
 	/**

@@ -28,4 +28,13 @@ public class Pillar extends Field {
 		//Nem csinalunk semmit, csak visszaterunk hamissal.
 		return false;
 	}
+	
+	/**
+	 * Ellenorzi, hogy van-e ervenyes lepes a parameterul kapott iranyba.
+	 * @param d Direction tipusu, ebbe az iranyba haladna egy MovableThing.
+	 * @return boolean tipussal ter vissza, mely mindig hamis.
+	 */
+	public boolean CheckMove(Direction d) {
+		return false;
+	}
 }

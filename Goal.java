@@ -28,7 +28,10 @@ public class Goal extends Field {
 			this.GetWarehouse().removeBox((Crate) t);
 			t.SetField(null);
 		}
-		else {}
+		else {
+			SetThing(t);
+			t.SetField(this);
+		}
 		return true;
 	}
 
@@ -46,7 +49,10 @@ public class Goal extends Field {
 			this.GetWarehouse().removeBox((Crate) t);
 			t.SetField(null);
 		}
-		else {}
+		else {
+			SetThing(t);
+			t.SetField(this);
+		}
 		return true;
 	}
 	

@@ -110,25 +110,6 @@ public class Field {
 	}
 	
 	/**
-	 * A parameterul kapott dolog rakerulhet a mezore.
-	 * @param t MovableThing tipusu, ez az objektum kerul a mezore.
-	 */
-	private void Accepted(MovableThing t) {
-		//Régi mezõrõl törli az objektumot.
-		try {
-			t.GetField().Remove(t);
-		} catch(NullPointerException e) {
-			/*
-			 * Nem csinálunk semmit.
-			 * A kivétel azt jelzi, hogy a MovableThing t nem volt még egy mezõn se, most kerül a pályára.
-			 */
-		}
-		//Kölcsönösen eltárolják egymást.
-		thing = t;
-		thing.SetField(this);
-	}
-	
-	/**
 	 * A parameterul kapott dolog torlese a mezorol.
 	 * @param t MovableThing tipusu, torlodik a things tombbol.
 	 */
@@ -212,7 +193,7 @@ public class Field {
 	/**
 	 * Ellenorzi, hogy van-e ervenyes lepes a parameterul kapott iranyba.
 	 * @param d Direction tipusu, ebbe az iranyba haladna egy MovableThing.
-	 * @return
+	 * @return boolean tipussal ter vissza, mely akkor true, ha lehet erre a mezore lepni.
 	 */
 	public boolean CheckMove(Direction d) {
 		if(GetNeighbour(d)!=null) {
