@@ -1,4 +1,3 @@
-package sokoban;
 
 
 public class Pillar extends Field {

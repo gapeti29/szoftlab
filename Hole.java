@@ -1,4 +1,3 @@
-package sokoban;
 
 
 public class Hole extends Field {

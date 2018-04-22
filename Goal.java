@@ -1,4 +1,3 @@
-package sokoban;
 
 public class Goal extends Field {
 	public Goal(Field f){

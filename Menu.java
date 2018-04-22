@@ -1,4 +1,3 @@
-package sokoban;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -6,7 +5,6 @@ public class Menu {
 	static Game game;
 	static ArrayList<String> commands;
 	public static void main(String[] args) throws IOException {
-		System.out.println("Adj meg egy parancsot!");
 		game=new Game();
 		commands = new ArrayList<String>();
 		Game.CreateMap();
@@ -72,10 +70,10 @@ public class Menu {
 	    pw.close();
 	}
 	public static void moveWorker(String direction) {
-		if(direction.compareTo("Up")==0)		game.currentPlayer().DirectMove(Direction.Up, game.currentPlayer().GetStrenght());
-		if(direction.compareTo("Down")==0)		game.currentPlayer().DirectMove(Direction.Down, game.currentPlayer().GetStrenght());
-		if(direction.compareTo("Left")==0)		game.currentPlayer().DirectMove(Direction.Left, game.currentPlayer().GetStrenght());
-		if(direction.compareTo("Right")==0)		game.currentPlayer().DirectMove(Direction.Right, game.currentPlayer().GetStrenght());
+		if(direction.compareTo("up")==0)		game.currentPlayer().DirectMove(Direction.Up, game.currentPlayer().GetStrenght());
+		if(direction.compareTo("down")==0)		game.currentPlayer().DirectMove(Direction.Down, game.currentPlayer().GetStrenght());
+		if(direction.compareTo("left")==0)		game.currentPlayer().DirectMove(Direction.Left, game.currentPlayer().GetStrenght());
+		if(direction.compareTo("right")==0)		game.currentPlayer().DirectMove(Direction.Right, game.currentPlayer().GetStrenght());
 		Game.NextRound();
 	}
 	public static void canPush() {
@@ -84,10 +82,10 @@ public class Menu {
 		{System.out.println("No");}
 	}
 	public static void setNeighbour(String name, String neighbour_name,String direction) {
-		if(direction.compareTo("Up")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Up);
-		if(direction.compareTo("Down")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Down);
-		if(direction.compareTo("Left")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Left);
-		if(direction.compareTo("Right")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Right);
+		if(direction.compareTo("up")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Up);
+		if(direction.compareTo("down")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Down);
+		if(direction.compareTo("left")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Left);
+		if(direction.compareTo("right")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Right);
 	}
 	public static void setWorker(String name,String field,String material) {
 		int converted_material=Integer.parseInt(material);

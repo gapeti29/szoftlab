@@ -1,4 +1,3 @@
-package sokoban;
 
 
 import java.util.HashMap;

@@ -1,4 +1,3 @@
-package sokoban;
 import java.util.ArrayList;
 
 public final class Game {

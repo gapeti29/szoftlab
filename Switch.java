@@ -1,4 +1,3 @@
-package sokoban;
 
 public class Switch extends Field{
 	private Hole holes;
