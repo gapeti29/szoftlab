@@ -77,14 +77,6 @@ public class Worker extends MovableThing{
 	}
 	
 	/**
-	 * Egy iranyt var a felhasznalotol, majd abba az iranyba megprobal lepni.
-	 */
-	public void Step() {
-		//Fejl. alatt...
-		DirectMove(Direction.Right, strength);
-	}
-	
-	/**
 	 * Torli magat az aktualis mezorol.
 	 * null ertekre allitja a tarolt mezo erteket.
 	 */
@@ -122,27 +114,6 @@ public class Worker extends MovableThing{
 	 */
 	public boolean DirectPushedBy(Direction d, double s) {
 		return false;
-	}
-	
-	/**
-	 * A jatekos altal kivalasztott anyagot helyezi arra a mezore, amelyen eppen all.
-	 * A lerakas feltetele az, hogy meg nem fogyott ki a munkas az anyagokbol.
-	 */
-	public void PutMaterial() {
-		//Beolvasás...
-		
-		if(materialCount > 0) {
-			//Beolvasott ertek vizsgalata lesz majd az if feltetel belsejeben...
-			if("1" == "Oil") {
-				Oil oil = new Oil();
-				oil.PutOn(GetField());
-			}
-			else {
-				Honey honey = new Honey();
-				honey.PutOn(GetField());
-			}
-			--materialCount;
-		}
 	}
 	
 	/**

@@ -153,6 +153,4 @@ public class Menu {
 	public static void pass() {
 		Game.NextRound();
 	}
-	
-
 }
