@@ -3,10 +3,10 @@ package sokoban;
 import java.util.ArrayList;
 
 /**
- * A játék helyszínét, a raktárat jeleníti meg.
- * A raktár mezõkbõl épül fel, amelyek egy négyzetrácsot alkotnak.
- * A raktár szélét falak határolják.
- * A raktár felelõssége nyilvántartani a pályán lévõ ládák számát, és lekérdezhetõ tõle, hogy van-e elérhetõ lépés a játékban.
+ * A jatek helyszinet, a raktarat jeleniti meg.
+ * A raktar mezokbol epul fel, amelyek egy negyzetracsot alkotnak.
+ * A raktar szelet falak hataroljak.
+ * A raktar felelossege nyilvantartani a palyan levo ladak szamat, es lekerdezheto tole, hogy van-e elerheto lepes a jatekban.
  */
 public class Warehouse {
 	/**
@@ -24,77 +24,106 @@ public class Warehouse {
 	
 	
 	/**
-	 * A paraméterül kapott ládát a ládákat tartalmazó tömb végére szúrja.
-	 * @param c Crate típusú.
+	 * A parameterul kapott ladat a ladakat tartalmazo tomb vegere szurja.
+	 * @param c Crate tipusu.
 	 */
 	public void AddCrate(Crate c) {
 		crates.add(c);
 	}
 	
 	/**
-	 * Megadja a raktárban lévõ ládák számát.
-	 * @return int típust ad vissza.
+	 * Megadja a raktarban levo ladak szamat.
+	 * @return int tipust ad vissza.
 	 */
 	public int GetRemainingCrates() { return remainingCrates; }
 	
 	/**
-	 * Egy láda megszûnt valamilyen okból.
-	 * @param c Crate típusú, ez a láda szûnt meg.
+	 * Egy lada megszunt valamilyen okbol.
+	 * @param c Crate tipusu, ez a lada szunt meg.
 	 */
 	public void CrateRemoved(Crate c) {
 		crates.remove(c);
 	}
 	
 	/**
-	 * A paraméterül kapott mezõt beszúrja a pályába, a paraméterül megadott helyre.
-	 * @param f Field típusú, ez a mezõ kerül beszúrásra.
-	 * @param i int típusú, a sor száma.
-	 * @param j int típusú, az oszlop száma.
+	 * A parameterul kapott mezot beszurja a palyaba, a parameterul megadott helyre.
+	 * @param f Field tipusu, ez a mezo kerul beszurasra.
+	 * @param i int tipusu, a sor szama.
+	 * @param j int tipusu, az oszlop szama.
 	 */
 	public void AddField(Field f) {
 		fields.add(f);
+		f.SetWarehouse(this);
+	}
+
+	/**
+	 * Torli a parameterul kapott ladat.
+	 * @param c Crate tipusu.
+	 */
+	public void removeBox(Crate c) {
+		crates.remove(c);
+	}
+
+	/**
+	 * Torli a parameterul kapott munkast.
+	 * @param w Worker tipusu.
+	 */
+	public void removeWorker(Worker w) {
+		Game.removeWorker(w);
 	}
 	
 	
 	/**
-	 * Ellenõrzi, hogy van-e még érvényes lépés a játékban.
-	 * @param workers Worker[] típusú, mely a játékban lévõ munkások referenciáját adja meg.
-	 * @return boolean típussal tér vissza, mely akkor true, ha van olyan munkás és olyan láda, mely tud lépni.
+	 * Ellenorzi, hogy van-e meg ervenyes lepes a jatekban.
+	 * @param workers Worker[] tipusu, mely a jatekban levo munkasok referenciajat adja meg.
+	 * @return boolean tipussal ter vissza, mely akkor true, ha van olyan munkas es olyan lada, mely tud lepni.
 	 */
 	public boolean HasMoves(ArrayList<Worker> workers) {
-		//Munkások
+		//Munkasok
 		boolean workersCanMove = false;
 		for(Worker w:workers) {
 			if(w.HasMoves())
 				workersCanMove = true;
 		}
 		
-		//Ládák
+		//Ladak
 		boolean cratesCanMove = false;
 		for(Crate c:crates) {
 			if(c.HasMoves())
 				cratesCanMove = true;
 		}
 	
-		//Csak akkor igaz, ha a munkások és a ládák közül is tud valamelyik lépni. 
+		//Csak akkor igaz, ha a munkasok es a ladak kozul is tud valamelyik lepni.
 		if(workersCanMove && cratesCanMove)
 			return true;
 		else
 			return false;
-	}	
-	
+	}
+
 	/**
 	 * Megkeresi azt a mezot, amelynek a nevet parameterul kapta.
 	 * @param name String tipusu, a keresett mezo neve.
 	 * @return Field tipussal ter vissza.
-	 */
+	 */	
 	public Field findField(String name) {
 		for(Field f:fields) {
 			if(f.getName().compareTo(name)==0)return f;
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Megkeresi a nev alapjan a ladat.
+	 * @param name String tipusu.
+	 * @return Crate tipussal ter vissza.
+	 */
+	public Crate findCrate(String name) {
+		for(Crate c:crates) {
+			if(c.getName().compareTo(name)==0)return c;
+		}
+		return null;
+	}
+
 	/**
 	 * Kilistazza a ladak neveit.
 	 */
@@ -102,7 +131,7 @@ public class Warehouse {
 		for(Crate c: crates)
 			System.out.println(c.GetField().getName());
 	}
-	
+
 	/**
 	 * Kilistazza a mezok neveit a hozzajuk tartozo surlodasi erovel egyutt.
 	 */
@@ -111,7 +140,7 @@ public class Warehouse {
 			System.out.println(f.getName()+": "+f.getCohesion());
 		}
 	}
-	
+
 	/**
 	 * Kilistazza a mezok allapotat.
 	 */

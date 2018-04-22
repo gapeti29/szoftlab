@@ -12,21 +12,7 @@ public class Switch extends Field{
 	 * A kapcsolohoz tartozo lyuk, amelyet iranyitani tud.
 	 */
 	private Hole holes;
-	
-	/**
-	 * A parameterul kapott mezovel egyenerteku kapcsolot hoz letre.
-	 * @param f Field tipusu.
-	 */
-	public Switch(Field f){
-		this.SetMaterial(f.GetMaterial());
-		this.SetNeighbour(f.GetNeighbour(Direction.Up), Direction.Up);
-		this.SetNeighbour(f.GetNeighbour(Direction.Down), Direction.Down);
-		this.SetNeighbour(f.GetNeighbour(Direction.Left), Direction.Left);
-		this.SetNeighbour(f.GetNeighbour(Direction.Right), Direction.Right);
-		this.SetThing(f.GetThing());
-		this.SetWarehouse(f.GetWarehouse());
-	}
-	
+
 	/**
 	 * A parameterul megadott nevvel letrehoz egy kapcsolot, beallitja hozza a lyukat, amit kinyit, vagy bezar.
 	 * @param name1 String tipusu, a kapcsolo neve.
@@ -85,12 +71,16 @@ public class Switch extends Field{
 	 * Becsukja a kapcsolohoz tartozo lyukat.
 	 */
 	public void TurnOff() { holes.Close(); }
+
+	/**
+	 * Kiirja, hogy tartozik-e hozza lyuk, es ha igen, akkor az nyitva van-e.
+	 */
 	public void List() {
 		if(holes==null) {
-			System.out.println(this.getName()+"	Nem tartozik hozza lyuk");
+			System.out.println(this.getName()+"	Nem tartozik hozzá lyuk");
 		}
 		else {
-			if(this.GetThing()==null)	System.out.println(this.getName()+"A hozza tartozo lyuk"+holes.getName()+":	Zarva");
+			if(this.GetThing()==null)	System.out.println(this.getName()+"A hozza tartozo lyuk"+holes.getName()+":	Zárva");
 			else						System.out.println(this.getName()+"A hozza tartozo lyuk"+holes.getName()+"	Nyitva");
 		}
 	}

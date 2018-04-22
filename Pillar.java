@@ -7,27 +7,12 @@ package sokoban;
  */
 public class Pillar extends Field {
 	/**
-	 * A parameterul kapott mezovel egyenerteku oszlopot hoz letre.
-	 * @param f Field tipusu.
-	 */
-	public Pillar(Field f){
-		this.SetMaterial(f.GetMaterial());
-		this.SetNeighbour(f.GetNeighbour(Direction.Up), Direction.Up);
-		this.SetNeighbour(f.GetNeighbour(Direction.Down), Direction.Down);
-		this.SetNeighbour(f.GetNeighbour(Direction.Left), Direction.Left);
-		this.SetNeighbour(f.GetNeighbour(Direction.Right), Direction.Right);
-		this.SetThing(f.GetThing());
-		this.SetWarehouse(f.GetWarehouse());
-	}
-	
-	/**
 	 * A parameterul megadott nevvel hoz letre egy oszlopot.
 	 * @param name1
 	 */
 	public Pillar(String name1) {
 		name=name1;
 	}
-	
 	/**
 	 * Nem fogad el semmit ez a mezo.
 	 */
@@ -37,7 +22,7 @@ public class Pillar extends Field {
 	}
 	
 	/**
-	 * Nem fogad el semmit ez a mezo.
+	 *  Nem fogad el semmit ez a mezo.
 	 */
 	public boolean DirectAccept(MovableThing t, Direction d, double s) {
 		//Nem csinalunk semmit, csak visszaterunk hamissal.

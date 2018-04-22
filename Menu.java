@@ -1,4 +1,3 @@
-package sokoban;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -6,7 +5,6 @@ public class Menu {
 	static Game game;
 	static ArrayList<String> commands;
 	public static void main(String[] args) throws IOException {
-		System.out.println("Adj meg egy parancsot!");
 		game=new Game();
 		commands = new ArrayList<String>();
 		Game.CreateMap();
@@ -29,8 +27,8 @@ public class Menu {
 		if(split[0].compareTo("setNeighbour")==0&&split.length==4){setNeighbour(split[1],split[2],split[3]);}
 		if(split[0].compareTo("setWorker")==0&&split.length==3){setWorker(split[1],split[2]);}
 		if(split[0].compareTo("setBox")==0&&split.length==3){setBox(split[1],split[2]);}
-		if(split[0].compareTo("setOil")==0&&split.length==1){setOil();}
-		if(split[0].compareTo("setHoney")==0&&split.length==1){setHoney();}
+		if(split[0].compareTo("setOil")==0&&split.length==2){setOil(split[1]);}
+		if(split[0].compareTo("setHoney")==0&&split.length==2){setHoney(split[1]);}
 		if(split[0].compareTo("setField")==0&&split.length==2){setField(split[1]);}
 		if(split[0].compareTo("setGoal")==0&&split.length==2){setField(split[1]);}
 		if(split[0].compareTo("setPillar")==0&&split.length==2){setPillar(split[1]);}
@@ -93,22 +91,20 @@ public class Menu {
 		if(direction.compareTo("Right")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Right);
 	}
 	public static void setWorker(String name,String field) {
-		Worker w=new Worker(name);
-		game.addWorker(w);
-		w.SetField(game.findField(field));
-		game.findField(field).SetThing(w);
+		game.addWorker(new Worker(name));
+		game.findWorker(name).SetField(game.findField(field));
+		game.findField(field).SetThing(game.findWorker(name));
 	}
 	public static void setBox(String name,String field) {
-		Crate c=new Crate(name);
-		game.addCrate(c);
-		c.SetField(game.findField(field));
-		game.findField(field).SetThing(c);
+		game.addCrate(new Crate(name));
+		game.findCrate(name).SetField(game.findField(field));
+		game.findField(field).SetThing(game.findCrate(name));
 	}
-	public static void setOil() {
-		game.currentPlayer().GetField().SetMaterial(new Oil());
+	public static void setOil(String field) {
+		game.findField(field).SetMaterial(new Oil());
 	}
-	public static void setHoney() {
-		game.currentPlayer().GetField().SetMaterial(new Honey());
+	public static void setHoney(String field) {
+		game.findField(field).SetMaterial(new Honey());
 	}
 	public static void setField(String name) {
 		game.addField(new Field(name));
@@ -117,7 +113,7 @@ public class Menu {
 		game.addField(new Pillar(name));
 	}
 	public static void setGoal(String name) {
-		game.addField(new Goal(name));
+		game.addField((Goal)new Goal(name));
 	}
 	public static void setHole(String name,String state) {
 		if(state.compareTo("closed")==0)

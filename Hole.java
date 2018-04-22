@@ -12,20 +12,6 @@ public class Hole extends Field {
 	private boolean isOpen;
 	
 	/**
-	 * A parameterul kapott mezovel egyenerteku lyukat hoz letre a konstruktor.
-	 * @param f Field tipusu.
-	 */
-	public Hole(Field f){
-		this.SetMaterial(f.GetMaterial());
-		this.SetNeighbour(f.GetNeighbour(Direction.Up), Direction.Up);
-		this.SetNeighbour(f.GetNeighbour(Direction.Down), Direction.Down);
-		this.SetNeighbour(f.GetNeighbour(Direction.Left), Direction.Left);
-		this.SetNeighbour(f.GetNeighbour(Direction.Right), Direction.Right);
-		this.SetThing(f.GetThing());
-		this.SetWarehouse(f.GetWarehouse());
-	}
-	
-	/**
 	 * Letrehoz egy lyukat a megadott nevvel, es tarolja, hogy nyitva van-e.
 	 * @param name1 String tipusu, a lyuk neve.
 	 * @param open_close boolean tipusu, mely akkor true, ha nyitva van a lyuk.
@@ -34,7 +20,7 @@ public class Hole extends Field {
 		name=name1;
 		isOpen=open_close;
 	}
-	
+
 	/**
 	 * Kinyitja a lyukat.
 	 */
@@ -55,6 +41,7 @@ public class Hole extends Field {
 	 * Kiertekeli, hogy a lyukra lephet-e a MovableThing, es ha igen, akkor megsemmisiti, ha a lyuk nyitva van. 
 	 * @param t MovableThing tipusu, ez az objektum lep a mezore (es adott esetben semmisul meg).
 	 * @param d Direction tipusu, azaz irany, amerre a MovableThing haladna.
+	 * @param s double tipusu, a toloero.
 	 * @return boolean tipussal ter vissza, amely akkor true, ha elfogadta a MovableThing-et.
 	 */
 	public boolean Accept(MovableThing t, Direction d, double s) {
@@ -72,6 +59,7 @@ public class Hole extends Field {
 	 * Kiertekeli, hogy a lyukra lephet-e a MovableThing (ami elvileg egy Worker lesz), es ha igen, akkor megsemmisiti, ha a lyuk nyitva van. 
 	 * @param t MovableThing tipusu, ez az objektum lep a mezore (es adott esetben semmisul meg).
 	 * @param d Direction tipusu, azaz irany, amerre a MovableThing haladna.
+	 * @param s double tipusu, a toloero.
 	 * @return boolean tipussal ter vissza, amely akkor true, ha elfogadta a MovableThing-et.
 	 */
 	public boolean DirectAccept(MovableThing t, Direction d, double s) {
@@ -84,12 +72,12 @@ public class Hole extends Field {
 		else
 			return false;
 	}
-	
+
 	/**
 	 * Kiirja a lyuk nevevel egyutt azt, hogy nyitva, vagy csukva van-e.
 	 */
 	public void List() {
 		if(isOpen)	System.out.println(this.getName()+"	Nyitva");
-		else		System.out.println(this.getName()+"	Zarva");
+		else		System.out.println(this.getName()+"	Zárva");
 	}
 }

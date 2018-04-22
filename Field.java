@@ -29,7 +29,7 @@ public class Field {
 	/**
 	 * A mezo surlodasi ereje.
 	 */
-	private double cohesion;
+	private double cohesion=0;
 	/**
 	 * A mezo neve (azonositoja).
 	 */
@@ -40,37 +40,41 @@ public class Field {
 	 * A szomszedokat null ertekkel allitja be.
 	 */
 	public Field() {
+		thing=null;
 		neighbours.put(Direction.Up, null);
 		neighbours.put(Direction.Down, null);
 		neighbours.put(Direction.Left, null);
 		neighbours.put(Direction.Right, null);
 	}
-	
+
 	/**
 	 * A konstruktor kap egy azonosito nevet.
 	 * @param ID String tipusu.
 	 */
-	public Field(String ID) {name = ID;}
-	
+	public Field(String ID) {name=ID;}
+
 	/**
 	 * A parameterul kapott objektumot elfogadja, ha tudja.
 	 * @param t MovableThing tipusu, ez az objektum kerulne a mezore.
 	 * @param d Direction tipusu, ebbe az iranyba halad a parameterul kapott objektum.
+	 * @param s double tipusu, a toloero.
 	 * @return boolean tipussal ter vissza, mely akkor true, ha elfogadta a mezo az objektumot.
 	 */
 	public boolean Accept(MovableThing t, Direction d, double s) {
-		if(thing != null) {
-			//Ha sikerult arrebb tolni a mezon levo dolgot.
-			if(thing.PushedBy(d, s)){
-				Accepted(t);
-				return true;
-			}
-			else
-				return false;
+		if(thing == null) {
+			thing = t;
+			thing.SetField(this);
+			return true;
 		}
 		else {
-			Accepted(t);
-			return true;
+			if(this.GetNeighbour(d).Accept(thing, d, s-cohesion)) {
+				thing=t;
+				thing.SetField(this);
+				return true;
+			}else
+			{
+				return false;
+			}
 		}
 	}
 	
@@ -78,21 +82,30 @@ public class Field {
 	 * A parameterul kapott objektumot elfogadja, ha tudja.
 	 * @param t MovableThing tipusu, ez az objektum kerulne a mezore.
 	 * @param d Direction tipusu, ebbe az iranyba halad a parameterul kapott objektum.
+	 * @param s double tipusu, a toloero.
 	 * @return boolean tipussal ter vissza, mely akkor true, ha elfogadta a mezo az objektumot.
 	 */
 	public boolean DirectAccept(MovableThing t, Direction d, double s) {
-		if(thing != null) {
-			//Ha sikerult arrebb tolni a mezon levo dolgot.
-			if(thing.DirectPushedBy(d, s)){
-				Accepted(t);
-				return true;
-			}
-			else
-				return false;
+		if(thing == null) {
+			thing = t;
+			thing.SetField(this);
+			return true;
 		}
 		else {
-			Accepted(t);
-			return true;
+			if(thing.DirectPushedBy(d, s)) {
+				if(this.GetNeighbour(d).Accept(thing, d, s-cohesion)) {
+					thing=t;
+					thing.SetField(this);
+					return true;
+				}else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 	
@@ -101,16 +114,16 @@ public class Field {
 	 * @param t MovableThing tipusu, ez az objektum kerul a mezore.
 	 */
 	private void Accepted(MovableThing t) {
-		//Regi mezorol torli az objektumot.
+		//Régi mezõrõl törli az objektumot.
 		try {
 			t.GetField().Remove(t);
 		} catch(NullPointerException e) {
 			/*
-			 * Nem csinalunk semmit.
-			 * A kivetel azt jelzi, hogy a MovableThing t nem volt meg egy mezon se, most kerul a palyara.
+			 * Nem csinálunk semmit.
+			 * A kivétel azt jelzi, hogy a MovableThing t nem volt még egy mezõn se, most kerül a pályára.
 			 */
 		}
-		//Kolcsonosen eltaroljak egymast.
+		//Kölcsönösen eltárolják egymást.
 		thing = t;
 		thing.SetField(this);
 	}
@@ -170,7 +183,7 @@ public class Field {
 	 * A munkas toloerejet csokkenti a mezo surlodasi erejevel.
 	 * @param s double tipusu, ez a toloero
 	 * @return double tipussal ter vissza, melynek erteke a fenn marado toloero.
-	 */	
+	 */		
 	public double ApplyCohesion(double s) {
 		return s - cohesion;
 	}
@@ -179,8 +192,21 @@ public class Field {
 	 * Eltarolja a parameterul kapott anyagot.
 	 * @param m Material tipusu, ez az anyag lesz a mezon.
 	 */
-	public void SetMaterial(Material m) { material = m; }
+	public void SetMaterial(Material m) { 
+		material = m;
+		cohesion=m.ModifyCohesion(cohesion);
+	}
+
+	/**
+	 * Visszaadja a mezon levo anyagot.
+	 * @return Material tipussal ter vissza.
+	 */
 	public Material GetMaterial() {return material;}
+
+	/**
+	 * Visszaadja a mezo surlodasi erejet.
+	 * @return double tipussal ter vissza.
+	 */
 	public double getCohesion() {return cohesion;}
 	
 	/**
@@ -199,12 +225,11 @@ public class Field {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Visszaadja a mezo nevet.
 	 * @return String tipussal ter vissza.
 	 */
 	public String getName() {return name;}
-	
 	public void List() {}
 }

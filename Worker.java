@@ -38,7 +38,7 @@ public class Worker extends MovableThing{
 	/**
 	 * A munkas pontszamanak eggyel novelese.
 	 */
-	public void AddPoint() { ++points; }
+	public void AddPoint() { points++; }
 	
 	/**
 	 * Visszaadja a jatekos pontjainak a szamat.
@@ -64,12 +64,16 @@ public class Worker extends MovableThing{
 	 * @return boolean tipussal ter vissza, mely akkor true, ha sikerult a mozgas.
 	 */
 	public boolean DirectMove(Direction d, double s) {
+		Field f = this.GetField();
 		if(GetField().GetNeighbour(d).DirectAccept(this, d, s))
 		{
+			f.SetThing(null);
 			return true;
 		}
 		else
+		{
 			return false;
+		}
 	}
 	
 	/**
@@ -103,11 +107,13 @@ public class Worker extends MovableThing{
 	 * @return boolean tipussal ter vissza, mely kulonbozo okokbol, de mindig true lesz.
 	 */
 	public boolean PushedBy(Direction d, double s) {
-		if(!Move(d, s)) {
-			Disappear();
+		s = s-(this.GetField().getCohesion());
+		if(s > 0) {
+			return true;
 		}
-		
-		return true;
+		else {
+			return false;
+		}
 	}
 	
 	/**
@@ -123,7 +129,7 @@ public class Worker extends MovableThing{
 	 * A lerakas feltetele az, hogy meg nem fogyott ki a munkas az anyagokbol.
 	 */
 	public void PutMaterial() {
-		//Beolvasas...
+		//Beolvasás...
 		
 		if(materialCount > 0) {
 			//Beolvasott ertek vizsgalata lesz majd az if feltetel belsejeben...

@@ -47,4 +47,10 @@ public abstract class MovableThing {
 	 * @param f Field tipusu.
 	 */
 	public void SetField(Field f) { field = f; }
+
+	/**
+	 * Visszaadja a MovableThing nevet.
+	 * @return String tipussal ter vissza.
+	 */
+	public String getName() {return name;}
 }

@@ -17,7 +17,7 @@ public class Crate extends MovableThing{
 	public Crate(String name1) {
 		name=name1;
 	}
-	
+
 	/**
 	 * Ertesiti a raktarepuletet, hogy megsemmisult.
 	 * Torli magat az aktualis mezorol.
@@ -43,10 +43,10 @@ public class Crate extends MovableThing{
 	 * @return boolean tipusu, true ertekkel ter vissza, ha sikeres volt a mozgas.
 	 */
 	public boolean PushedBy(Direction d, double s)  {
-		s = GetField().ApplyCohesion(s);
+		s = s-(this.GetField().getCohesion());
 		//Csak akkor tolodik arrebb a lada, ha megfelelo erovel toljak, tehat meg pozitiv az s ero.
 		if(s > 0) {
-			return Move(d, s);
+			return true;
 		}
 		else {
 			return false;
@@ -59,10 +59,9 @@ public class Crate extends MovableThing{
 	 * @return boolean tipusu, true ertekkel ter vissza, ha sikeres volt a mozgas.
 	 */
 	public boolean DirectPushedBy(Direction d, double s) {
-		s = GetField().ApplyCohesion(s);
-		//Csak akkor tolodik arrebb a lada, ha megfelelo erovel toljak, tehat meg pozitiv az s ero.
+		s = s-(this.GetField().getCohesion());
 		if(s > 0) {
-			return Move(d, s);
+			return true;
 		}
 		else {
 			return false;
