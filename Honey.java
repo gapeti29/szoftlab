@@ -1,12 +1,18 @@
+package sokoban;
 
-
+/**
+ * A mezore helyezheto osztaly, amely csokkenti a mezo tapadasat.
+ */
 public class Honey extends Material {
+	/**
+	 * A mezre jellemzo surlodasi ero. Ennyivel modositja egy mezo surlodasi erejet, ha rakerul.
+	 */
 	private static final double cohesion = 0.5;
 	
 	/**
-	 * A paraméterül kapott súrlódási erõt növeli az anyagra jellemzõ erõvel.
-	 * @param c double típusú, ezt az értéket fogja növelni.
-	 * @return double típussal tér vissza, melynek értéke az új, növelt érték.
+	 * A parameterul kapott surlodasi erot noveli az anyagra jellemzo erovel.
+	 * @param c double tipusu, ezt az erteket fogja novelni.
+	 * @return double tipussal ter vissza, melynek erteke az uj, novelt ertek.
 	 */
 	public double ModifyCohesion(double c) {
 		return c + cohesion;

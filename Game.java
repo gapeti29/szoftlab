@@ -1,41 +1,96 @@
+package sokoban;
+
 import java.util.ArrayList;
 
+/**
+ * Nyilvantartja az aktualis jatek koreinek szamat.
+ * Sorban lepesre szolitja fel a jatekosokat, majd a megfelelo iranyba mozgatja a munkasaikat.
+ * uj jatekot tud kezdeni, ennek soran letrehozza a raktar terkepet, es az eppen futo jatekot be is tudja fejezni.
+ * A jatektol lekerdezheto az eppen soron levo jatekos.
+ */
 public final class Game {
+	/**
+	 * A korok szama.
+	 */
 	private static int round = 0;
+	/**
+	 * A palya, ahol a jatek folyik.
+	 */
 	private static Warehouse map;
+	/**
+	 * Munkasok referenciaja.
+	 */
 	private static ArrayList<Worker> workers=new ArrayList<Worker>();
-	private static int playersNumber = 0; //Az aktuálisan soron lévõ játékos sorszáma.
+	/**
+	 * Az aktualisan soron levo jatekos sorszama.
+	 */
+	private static int playersNumber = 0; 
 
-	
+	/**
+	 * Megkeresi a munkast a parameterul kapott neve alapjan, es azt vissza is adja.
+	 * @param name String tipusu, ezt a munkast keressuk.
+	 * @return Worker tipussal ter vissza.
+	 */
 	public Worker findWorker(String name) {
 		for(Worker w:workers) {
 			if(w.GetName().compareTo(name)==0) {return w;}
 		}
 		return null;
 	}
+	
+	/**
+	 * Megkeresi a mezot a parameterul kapott neve alapjan, es azt vissza is adja.
+	 * @param name String tipusu, ezt a mezot keressuk.
+	 * @return Field tipussal ter vissza.
+	 */
 	public Field findField(String name) {
 		return map.findField(name);
 	}
+	
+	/**
+	 * Ellenorzi, hogy tud-e meg lepni valamelyik munkas.
+	 * @return boolean tipussal ter vissza, mely akkor true, ha van meg ervenyes lepes.
+	 */
 	public boolean canPush() {
 		return map.HasMoves(workers);
 	}
-	public void addField(Field name) {
-		map.AddField(name);
+	
+	/**
+	 * A parameterul kapott mezot hozzaadja a palyahoz.
+	 * @param f Field tipusu.
+	 */
+	public void addField(Field f) {
+		map.AddField(f);
 	}
+	
+	/**
+	 * A parameterul kapott munkast eltarolja.
+	 * @param w Worker tipusu.
+	 */
 	public void addWorker(Worker w) {
 		workers.add(w);
 	}
+	
+	/**
+	 * A parameterul kapott ladat hozzaadja a palyahoz.
+	 * @param c Crate tipusu.
+	 */
 	public void addCrate(Crate c) {
 		map.AddCrate(c);
 	}
+	
+	/**
+	 * Visszaadja az aktualisan soron levo munkast.
+	 * @return Worker tipussal ter vissza.
+	 */
 	public Worker currentPlayer() {
 		return workers.get(playersNumber);
 	}
 	
 	
 	/**
-	 * A játékot eggyel tovább lépteti.
-	 * Eggyel növeli a round változót, ha minden játékos lépet a körben.
+	 * A jatekot eggyel tovabb lepteti.
+	 * Eggyel noveli a round valtozot, ha minden jatekos lepet a korben.
 	 */
 	public static void NextRound() {
 		++playersNumber;
@@ -44,9 +99,10 @@ public final class Game {
 			++round;
 		}
 	}
+	
 	/**
-	 * Létrehoz egy új raktárépületet és generál hozzá egy pályát a fájl alapján.
-	 * @param file String típusú, a pályát tartalmazó fájl neve.
+	 * Letrehoz egy uj raktarepuletet es general hozza egy palyat a fajl alapjan.
+	 * @param file String tipusu, a palyat tartalmazo fajl neve.
 	 */
 	public static void CreateMap() {
 		map = new Warehouse();
@@ -54,13 +110,13 @@ public final class Game {
 	
 	
 	/**
-	 * Visszaadja az aktuális kör sorszámát.
-	 * @return	int típussal tér vissza.
+	 * Visszaadja az aktualis kor sorszamat.
+	 * @return	int tipussal ter vissza.
 	 */
 	public static int GetRound() { return round; }
 	
 	/**
-	 * Az aktuális körön lévõ játékosnak ad egy pontot.
+	 * Az aktualis koron levo jatekosnak ad egy pontot.
 	 */
 	public static void AddPointToWorker() {
 		workers.get(playersNumber).AddPoint();
@@ -69,14 +125,26 @@ public final class Game {
 	private void DrawMap() {
 		//Felj. alatt...
 	}
+	
+	/**
+	 * Kilistazza azokat a mezoket, melyeken dobozok allnak.
+	 */
 	public void listBox() {
 		map.listBox();
 	}
+	
+	/**
+	 * Kilistazza a jatekosok pontjait.
+	 */
 	public void listPoints() {
 		for(Worker w: workers) {
 			System.out.println("Player: "+w.GetName()+"	Field: "+w.GetField().getName()+" Points: "+w.GetPoints());
 		}
 	}
+	
+	/**
+	 * Kilistazza az aktualis kor sorszamat, vagy ha mar nem tudnak lepni a jatekosok, akkor a legtobb pontot elert jatekos nevet plusz pontszamat.
+	 */
 	public void listRound() {
 		boolean zero_moves=true;
 		for(Worker w:workers) {
@@ -95,9 +163,14 @@ public final class Game {
 			System.out.println("Current round: "+round);
 		}
 	}
+	
+	/**
+	 * Kilistazza a palya mezoinek a surlodasi erejet.
+	 */
 	public void listCohesion() {
 		map.listCohesion();
 	}
+	
 	public void listFieldState() {
 		map.listFieldState();
 	}

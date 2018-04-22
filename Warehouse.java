@@ -1,8 +1,25 @@
+package sokoban;
+
 import java.util.ArrayList;
 
+/**
+ * A játék helyszínét, a raktárat jeleníti meg.
+ * A raktár mezõkbõl épül fel, amelyek egy négyzetrácsot alkotnak.
+ * A raktár szélét falak határolják.
+ * A raktár felelõssége nyilvántartani a pályán lévõ ládák számát, és lekérdezhetõ tõle, hogy van-e elérhetõ lépés a játékban.
+ */
 public class Warehouse {
+	/**
+	 * A meg jatekban levo ladak szama.
+	 */
 	private int remainingCrates;
+	/**
+	 * A mezok, amelyekbol a palya all.
+	 */
 	private ArrayList<Field> fields=new ArrayList<Field>();
+	/**
+	 * A palyan levo ladak referenciaja.
+	 */
 	private ArrayList<Crate> crates=new ArrayList<Crate>();
 	
 	
@@ -34,8 +51,8 @@ public class Warehouse {
 	 * @param i int típusú, a sor száma.
 	 * @param j int típusú, az oszlop száma.
 	 */
-	public void AddField(Field name) {
-		fields.add(name);
+	public void AddField(Field f) {
+		fields.add(f);
 	}
 	
 	
@@ -65,21 +82,39 @@ public class Warehouse {
 		else
 			return false;
 	}	
+	
+	/**
+	 * Megkeresi azt a mezot, amelynek a nevet parameterul kapta.
+	 * @param name String tipusu, a keresett mezo neve.
+	 * @return Field tipussal ter vissza.
+	 */
 	public Field findField(String name) {
 		for(Field f:fields) {
 			if(f.getName().compareTo(name)==0)return f;
 		}
 		return null;
 	}
+	
+	/**
+	 * Kilistazza a ladak neveit.
+	 */
 	public void listBox() {
 		for(Crate c: crates)
 			System.out.println(c.GetField().getName());
 	}
+	
+	/**
+	 * Kilistazza a mezok neveit a hozzajuk tartozo surlodasi erovel egyutt.
+	 */
 	public void listCohesion() {
 		for(Field f:fields) {
 			System.out.println(f.getName()+": "+f.getCohesion());
 		}
 	}
+	
+	/**
+	 * Kilistazza a mezok allapotat.
+	 */
 	public void listFieldState() {
 		for(Field f:fields) {
 			f.List();

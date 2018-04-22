@@ -1,21 +1,43 @@
-
+package sokoban;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A mezo nyilvantartja a rajta allo munkast vagy ladat, es ismeri a szomszedait, akik iranyonkent lekerdezhetoek tole.
+ * A mezo elfogadhat munkasokat vagy ladakat es el is tavolithatja oket magarol.
+ * A mezo felelossege, hogy egyszerre csak egy lada vagy munkas lehessen rajta.
+ * A mezo rendelkezik egy tapadassal, melyet a ra kerulo anyagok modosithatnak.
+ */
 public class Field {
+	/**
+	 * A mezon levo Movablething (mar ha van).
+	 */
 	private MovableThing thing;
+	/**
+	 * A mezo szomszedai.
+	 */
 	private Map<Direction, Field> neighbours = new HashMap<Direction, Field>();
+	/**
+	 * A mezot tartalmazo Warehouse referenciaja.
+	 */
 	private Warehouse warehouse;
+	/**
+	 * A mezon levo Material (mar ha van).
+	 */
 	private Material material;
+	/**
+	 * A mezo surlodasi ereje.
+	 */
 	private double cohesion;
+	/**
+	 * A mezo neve (azonositoja).
+	 */
 	protected String name;
 	
 	/**
-	 * A paraméterül kapott objektumot elfogadja, ha tudja.
-	 * @param t MovableThing típusú, ez az objektum kerülne a mezõre.
-	 * @param d Direction típusú, ebbe az irányba halad a paraméterül kapott objektum.
-	 * @return boolean típussal tér vissza, mely akkor true, ha elfogadta a mezõ az objektumot.
+	 * Parameter nelkuli konstruktor.
+	 * A szomszedokat null ertekkel allitja be.
 	 */
 	public Field() {
 		neighbours.put(Direction.Up, null);
@@ -23,10 +45,22 @@ public class Field {
 		neighbours.put(Direction.Left, null);
 		neighbours.put(Direction.Right, null);
 	}
-	public Field(String azzonisito) {name=azzonisito;}
+	
+	/**
+	 * A konstruktor kap egy azonosito nevet.
+	 * @param ID String tipusu.
+	 */
+	public Field(String ID) {name = ID;}
+	
+	/**
+	 * A parameterul kapott objektumot elfogadja, ha tudja.
+	 * @param t MovableThing tipusu, ez az objektum kerulne a mezore.
+	 * @param d Direction tipusu, ebbe az iranyba halad a parameterul kapott objektum.
+	 * @return boolean tipussal ter vissza, mely akkor true, ha elfogadta a mezo az objektumot.
+	 */
 	public boolean Accept(MovableThing t, Direction d, double s) {
 		if(thing != null) {
-			//Ha sikerült arrébb tolni a mezõn lévõ dolgot.
+			//Ha sikerult arrebb tolni a mezon levo dolgot.
 			if(thing.PushedBy(d, s)){
 				Accepted(t);
 				return true;
@@ -41,14 +75,14 @@ public class Field {
 	}
 	
 	/**
-	 * A paraméterül kapott objektumot elfogadja, ha tudja.
-	 * @param t MovableThing típusú, ez az objektum kerülne a mezõre.
-	 * @param d Direction típusú, ebbe az irányba halad a paraméterül kapott objektum.
-	 * @return boolean típussal tér vissza, mely akkor true, ha elfogadta a mezõ az objektumot.
+	 * A parameterul kapott objektumot elfogadja, ha tudja.
+	 * @param t MovableThing tipusu, ez az objektum kerulne a mezore.
+	 * @param d Direction tipusu, ebbe az iranyba halad a parameterul kapott objektum.
+	 * @return boolean tipussal ter vissza, mely akkor true, ha elfogadta a mezo az objektumot.
 	 */
 	public boolean DirectAccept(MovableThing t, Direction d, double s) {
 		if(thing != null) {
-			//Ha sikerült arrébb tolni a mezõn lévõ dolgot.
+			//Ha sikerult arrebb tolni a mezon levo dolgot.
 			if(thing.DirectPushedBy(d, s)){
 				Accepted(t);
 				return true;
@@ -63,27 +97,27 @@ public class Field {
 	}
 	
 	/**
-	 * A paraméterül kapott dolog rákerülhet a mezõre.
-	 * @param t MovableThing típusú, ez az objektum kerül a mezõre.
+	 * A parameterul kapott dolog rakerulhet a mezore.
+	 * @param t MovableThing tipusu, ez az objektum kerul a mezore.
 	 */
 	private void Accepted(MovableThing t) {
-		//Régi mezõrõl törli az objektumot.
+		//Regi mezorol torli az objektumot.
 		try {
 			t.GetField().Remove(t);
 		} catch(NullPointerException e) {
 			/*
-			 * Nem csinálunk semmit.
-			 * A kivétel azt jelzi, hogy a MovableThing t nem volt még egy mezõn se, most kerül a pályára.
+			 * Nem csinalunk semmit.
+			 * A kivetel azt jelzi, hogy a MovableThing t nem volt meg egy mezon se, most kerul a palyara.
 			 */
 		}
-		//Kölcsönösen eltárolják egymást.
+		//Kolcsonosen eltaroljak egymast.
 		thing = t;
 		thing.SetField(this);
 	}
 	
 	/**
-	 * A paraméterül kapott dolog törlése a mezõrõl.
-	 * @param t MovableThing típusú, törlõdik a things tömbbõl.
+	 * A parameterul kapott dolog torlese a mezorol.
+	 * @param t MovableThing tipusu, torlodik a things tombbol.
 	 */
 	public void Remove(MovableThing t) {
 		if(thing == t)
@@ -91,67 +125,67 @@ public class Field {
 	}
 	
 	/**
-	 * Visszaadja a paraméterül kapott irányban lévõ szomszédos mezõt.
-	 * @param d Ebben az irányban helyezkedik el a szomszédos mezõ.
-	 * @return	Field típust ad vissza.
+	 * Visszaadja a parameterul kapott iranyban levo szomszedos mezot.
+	 * @param d Ebben az iranyban helyezkedik el a szomszedos mezo.
+	 * @return	Field tipust ad vissza.
 	 */
 	public Field GetNeighbour(Direction d) {
 		return neighbours.get(d);
 	}
 	
 	/**
-	 * Eltárolja a mezõ a paraméterül kapott másik mezõt, a paraméterül kapott irányban lévõ szomszédjaként.
-	 * @param f Field típusú, ezt a mezõt tárolja szomszédként.
-	 * @param d Direction típusú, ebben az irányban lesz a szomszéd.
+	 * Eltarolja a mezo a parameterul kapott masik mezot, a parameterul kapott iranyban levo szomszedjakent.
+	 * @param f Field tipusu, ezt a mezot tarolja szomszedkent.
+	 * @param d Direction tipusu, ebben az iranyban lesz a szomszed.
 	 */
 	public void SetNeighbour(Field f, Direction d) {
 		neighbours.put(d, f);
 	}
 	
 	/**
-	 * Visszaadja azt a raktárépületet, amelyben a mezõ van.
-	 * @return Warehouse típussal tér vissza.
+	 * Visszaadja azt a raktarepuletet, amelyben a mezo van.
+	 * @return Warehouse tipussal ter vissza.
 	 */
 	public Warehouse GetWarehouse() { return warehouse; }
 	
 	/**
-	 * Eltárolja a paraméterül kapott raktárépületet.
-	 * @param w Warehouse típusú, ebben szerepel a mezõ.
+	 * Eltarolja a parameterul kapott raktarepuletet.
+	 * @param w Warehouse tipusu, ebben szerepel a mezo.
 	 */
 	public void SetWarehouse(Warehouse w) { warehouse = w; }
 	
 	/**
-	 * Visszaadja a mezõn lévõ dolgot.
-	 * @return MovableThing típussal tér vissza.
+	 * Visszaadja a mezon levo dolgot.
+	 * @return MovableThing tipussal ter vissza.
 	 */
 	public MovableThing GetThing() { return thing; }
 	
 	/**
-	 * A paraméterül kapott dolgot eltárolja a mezõ.
-	 * @param t MovableThing típusú.
+	 * A parameterul kapott dolgot eltarolja a mezo.
+	 * @param t MovableThing tipusu.
 	 */
 	public void SetThing(MovableThing t) { thing = t; }
 	
 	/**
-	 * A munkás tolóerejét csökkenti a mezõ súrlódási erejével.
-	 * @param s double típusú, ez a tolóerõ
-	 * @return double típussal tér vissza, melynek értéke a fenn maradó tolóerõ.
+	 * A munkas toloerejet csokkenti a mezo surlodasi erejevel.
+	 * @param s double tipusu, ez a toloero
+	 * @return double tipussal ter vissza, melynek erteke a fenn marado toloero.
 	 */	
 	public double ApplyCohesion(double s) {
 		return s - cohesion;
 	}
 	
 	/**
-	 * Eltárolja a paraméterül kapott anyagot.
-	 * @param m Material típusú, ez az anyag lesz a mezõn.
+	 * Eltarolja a parameterul kapott anyagot.
+	 * @param m Material tipusu, ez az anyag lesz a mezon.
 	 */
 	public void SetMaterial(Material m) { material = m; }
 	public Material GetMaterial() {return material;}
 	public double getCohesion() {return cohesion;}
 	
 	/**
-	 * Ellenõrzi, hogy van-e érvényes lépés a paraméterül kapott irányba.
-	 * @param d Direction típusú, ebbe az irányba haladna egy MovableThing.
+	 * Ellenorzi, hogy van-e ervenyes lepes a parameterul kapott iranyba.
+	 * @param d Direction tipusu, ebbe az iranyba haladna egy MovableThing.
 	 * @return
 	 */
 	public boolean CheckMove(Direction d) {
@@ -165,6 +199,12 @@ public class Field {
 			return true;
 		}
 	}
+	
+	/**
+	 * Visszaadja a mezo nevet.
+	 * @return String tipussal ter vissza.
+	 */
 	public String getName() {return name;}
+	
 	public void List() {}
 }

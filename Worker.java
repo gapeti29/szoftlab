@@ -1,39 +1,67 @@
+package sokoban;
 
-
+/**
+ * A jatekosok altal iranyitott munkas.
+ * A jatekos koreben a munkasa egy mezonyit lephet es kozben ladakat tolhat el.
+ * A munkas tartja nyilvan a jatekos altal szerzett pontokat.
+ * A munkasokat egy mozgo lada arrebb tudja lokni, es ha nyitott lyuk mezore lep, akkor a munkas meghal.
+ * A soron levo munkas kozvetlenul nem kepes egy masik munkast eltolni.
+ * A munkas rendelkezik egy toloerovel, ami azt mutatja, hogy milyen erovel kepes ladakat tolni.
+ */
 public class Worker extends MovableThing{
+	/**
+	 * A munkas pontszama.
+	 */
 	private int points = 0;
-	private String name;
-	private double strength = 1.1; //Random érték...
+	/**
+	 * A munkas ereje, ekkora erovel tud tolni dolgokat.
+	 */
+	private double strength = 1.1;
+	/**
+	 * A kenoanyagjai szama.
+	 */
 	private int materialCount;
 	
+	/**
+	 * Letrehoz egy munkast a parameterul megadott nevvel es kenoanyagok szamaval.
+	 * @param s String tipusu, a munkas neve.
+	 * @param material int tipusu, a kenoanyagok szama.
+	 */
 	public Worker(String s,int material) { name = s; materialCount=material;}
 	
+	/**
+	 * Letrehoz egy munkast a megadott nevvel.
+	 * @param s String tipusu.
+	 */
 	public Worker(String s) { name = s;}
 	
 	/**
-	 * A munkás pontszámának eggyel növelése.
+	 * A munkas pontszamanak eggyel novelese.
 	 */
 	public void AddPoint() { ++points; }
 	
 	/**
-	 * Visszaadja a játékos pontjainak a számát.
-	 * @return int típussal tér vissza.
+	 * Visszaadja a jatekos pontjainak a szamat.
+	 * @return int tipussal ter vissza.
 	 */
 	public int GetPoints() { return points; }
 	
 	/**
-	 * Visszaadja a játékos nevét.
-	 * @return String típussal tér vissza.
+	 * Visszaadja a jatekos nevet.
+	 * @return String tipussal ter vissza.
 	 */
 	public String GetName() { return name; }
 	
-	
+	/**
+	 * Visszaadja a munkas erejet.
+	 * @return double tipussal ter vissza.
+	 */
 	public double GetStrenght() { return strength; }
 	
 	/**
-	 * A munkás megpróbál az adott irányba lépni (direktben, nem tolják).
-	 * @param d Direction típusú, ebbe az irányba haladna.
-	 * @return boolean típussal tér vissza, mely akkor true, ha sikerült a mozgás.
+	 * A munkas megprobal az adott iranyba lepni (direktben, nem toljak).
+	 * @param d Direction tipusu, ebbe az iranyba haladna.
+	 * @return boolean tipussal ter vissza, mely akkor true, ha sikerult a mozgas.
 	 */
 	public boolean DirectMove(Direction d, double s) {
 		if(GetField().GetNeighbour(d).DirectAccept(this, d, s))
@@ -45,7 +73,7 @@ public class Worker extends MovableThing{
 	}
 	
 	/**
-	 * Egy irányt vár a felhasználótól, majd abba az irányba megpróbál lépni.
+	 * Egy iranyt var a felhasznalotol, majd abba az iranyba megprobal lepni.
 	 */
 	public void Step() {
 		//Fejl. alatt...
@@ -53,8 +81,8 @@ public class Worker extends MovableThing{
 	}
 	
 	/**
-	 * Törli magát az aktuális mezõrõl.
-	 * null értékre állítja a tárolt mezõ értékét.
+	 * Torli magat az aktualis mezorol.
+	 * null ertekre allitja a tarolt mezo erteket.
 	 */
 	public void Disappear() {
 		GetField().Remove(this);
@@ -62,17 +90,17 @@ public class Worker extends MovableThing{
 	}
 	
 	/**
-	 * Kikapcsolja a paraméterül kapott kapcsolót.
+	 * Kikapcsolja a parameterul kapott kapcsolot.
 	 */
 	public void ControlSwitch(Switch s) {
 		s.TurnOff();
 	}
 	
 	/**
-	 * A munkást nem közvetlen próbálják meg arrébb tolni, így megpróbál az adott irányba tolódni.
-	 * Ha nem sikerül arrébb tolódnia, akkor meghal.
-	 * @param d Direction típusú, ebbe az irányba mozogna.
-	 * @return boolean típussal tér vissza, mely különbözõ okokból, de mindig true lesz.
+	 * A munkast nem kozvetlen probaljak meg arrebb tolni, igy megprobal az adott iranyba tolodni.
+	 * Ha nem sikerul arrebb tolodnia, akkor meghal.
+	 * @param d Direction tipusu, ebbe az iranyba mozogna.
+	 * @return boolean tipussal ter vissza, mely kulonbozo okokbol, de mindig true lesz.
 	 */
 	public boolean PushedBy(Direction d, double s) {
 		if(!Move(d, s)) {
@@ -83,22 +111,22 @@ public class Worker extends MovableThing{
 	}
 	
 	/**
-	 * A munkást nem lehet direktben eltolni, ezért mindig false értékkel tér vissza.
-	 * @return boolean típussal tér vissza.
+	 * A munkast nem lehet direktben eltolni, ezert mindig false ertekkel ter vissza.
+	 * @return boolean tipussal ter vissza.
 	 */
 	public boolean DirectPushedBy(Direction d, double s) {
 		return false;
 	}
 	
 	/**
-	 * A játékos által kiválasztott anyagot helyezi arra a mezõre, amelyen éppen áll.
-	 * A lerakás feltétele az, hogy még nem fogyott ki a munkás az anyagokból.
+	 * A jatekos altal kivalasztott anyagot helyezi arra a mezore, amelyen eppen all.
+	 * A lerakas feltetele az, hogy meg nem fogyott ki a munkas az anyagokbol.
 	 */
 	public void PutMaterial() {
-		//Beolvasás...
+		//Beolvasas...
 		
 		if(materialCount > 0) {
-			//Beolvasott érték vizsgálata lesz majd az if feltétel belsejében...
+			//Beolvasott ertek vizsgalata lesz majd az if feltetel belsejeben...
 			if("1" == "Oil") {
 				Oil oil = new Oil();
 				oil.PutOn(GetField());
@@ -112,8 +140,8 @@ public class Worker extends MovableThing{
 	}
 	
 	/**
-	 * A munkásnak akkor van érvényes lépése, ha bármelyik irányba tud lépni egyet.
-	 * @return boolean típussal tér vissza, mely akkor true, ha tud lépni valamerre a munkás. 
+	 * A munkasnak akkor van ervenyes lepese, ha barmelyik iranyba tud lepni egyet.
+	 * @return boolean tipussal ter vissza, mely akkor true, ha tud lepni valamerre a munkas. 
 	 */
 	public boolean HasMoves() {
 		if( GetField().CheckMove(Direction.Up) ||

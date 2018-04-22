@@ -1,6 +1,22 @@
+package sokoban;
 
+/**
+ * A lyukak allapotat vezerlo elem.
+ * Ki tudja nyitni vagy be tudja csukni a hozza tartozo lyukat.
+ * A tobbi mezohoz hasonloan kepes mozgo dolgokat (munkasokat vagy ladakat) tarolni.
+ * Egy lada csak ugy kerulhet le egy kapcsolorol, ha egy masik lada vagy egy munkas letolja onnan.
+ * Mivel az elso esetben a kapcsolo allapota nem valtozik, ezert a kapcsolo csak akkor kapcsol ki, ha munkas lep ra.
+ */
 public class Switch extends Field{
+	/**
+	 * A kapcsolohoz tartozo lyuk, amelyet iranyitani tud.
+	 */
 	private Hole holes;
+	
+	/**
+	 * A parameterul kapott mezovel egyenerteku kapcsolot hoz letre.
+	 * @param f Field tipusu.
+	 */
 	public Switch(Field f){
 		this.SetMaterial(f.GetMaterial());
 		this.SetNeighbour(f.GetNeighbour(Direction.Up), Direction.Up);
@@ -11,24 +27,30 @@ public class Switch extends Field{
 		this.SetWarehouse(f.GetWarehouse());
 	}
 	
+	/**
+	 * A parameterul megadott nevvel letrehoz egy kapcsolot, beallitja hozza a lyukat, amit kinyit, vagy bezar.
+	 * @param name1 String tipusu, a kapcsolo neve.
+	 * @param on_off boolean tipusu, mely akkor true, ha nyitva van a lyuk.
+	 * @param holes1 String tipusu, a kapcsolohoz tartozo lyuk neve.
+	 */
 	public Switch(String name1,boolean on_off,String holes1) {
 		name=name1;
+		holes=(Hole) this.GetWarehouse().findField(holes1);
 		if(on_off)this.TurnOn();
 		else this.TurnOff();
-		holes=(Hole) this.GetWarehouse().findField(holes1);
 	}
 
 	/**
-	 * A paraméterül kapott lyukat tudja majd állítani.
-	 * @param h Hole típusú.
+	 * A parameterul kapott lyukat tudja majd allitani.
+	 * @param h Hole tipusu.
 	 */
 	public void SetHole(Hole h) { holes = h; }
 	
 	/**
-	 * Megpróbálja elfogadni a mezõre érkezõ MovableThing típusú objektumot, és meghívja annak a kapcsoló kezelõ függvényét, ha elfogadta.
-	 * @param t MovableThing típusú, ez az objektum kerülne a mezõre.
-	 * @param d Direction típusú, ebbe az irányba halad a paraméterül kapott objektum.
-	 * @return boolean típussal tér vissza, mely akkor true, ha elfogadta a MovableThing-et.
+	 * Megprobalja elfogadni a mezore erkezo MovableThing tipusu objektumot, es meghivja annak a kapcsolo kezelo fuggvenyet, ha elfogadta.
+	 * @param t MovableThing tipusu, ez az objektum kerulne a mezore.
+	 * @param d Direction tipusu, ebbe az iranyba halad a parameterul kapott objektum.
+	 * @return boolean tipussal ter vissza, mely akkor true, ha elfogadta a MovableThing-et.
 	 */
 	public boolean Accept(MovableThing t, Direction d, double s) {
 		if(super.Accept(t, d, s)){
@@ -40,10 +62,10 @@ public class Switch extends Field{
 	}
 	
 	/**
-	 * Megpróbálja elfogadni a mezõre érkezõ MovableThing típusú objektumot, és meghívja annak a kapcsoló kezelõ függvényét, ha elfogadta.
-	 * @param t MovableThing típusú, ez az objektum kerülne a mezõre.
-	 * @param d Direction típusú, ebbe az irányba halad a paraméterül kapott objektum.
-	 * @return boolean típussal tér vissza, mely akkor true, ha elfogadta a MovableThing-et.
+	 * Megprobalja elfogadni a mezore erkezo MovableThing tipusu objektumot, es meghivja annak a kapcsolo kezelo fuggvenyet, ha elfogadta.
+	 * @param t MovableThing tipusu, ez az objektum kerulne a mezore.
+	 * @param d Direction tipusu, ebbe az iranyba halad a parameterul kapott objektum.
+	 * @return boolean tipussal ter vissza, mely akkor true, ha elfogadta a MovableThing-et.
 	 */
 	public boolean DirectAccept(MovableThing t, Direction d, double s) {
 		if(super.DirectAccept(t, d, s)){
@@ -55,20 +77,20 @@ public class Switch extends Field{
 	}
 	
 	/**
-	 * Kinyitja a kapcsolóhoz tartozó lyukat.
+	 * Kinyitja a kapcsolohoz tartozo lyukat.
 	 */
 	public void TurnOn() { holes.Open(); }
 	
 	/**
-	 * Becsukja a kapcsolóhoz tartozó lyukat.
+	 * Becsukja a kapcsolohoz tartozo lyukat.
 	 */
 	public void TurnOff() { holes.Close(); }
 	public void List() {
 		if(holes==null) {
-			System.out.println(this.getName()+"	Nem tartozik hozzá lyuk");
+			System.out.println(this.getName()+"	Nem tartozik hozza lyuk");
 		}
 		else {
-			if(this.GetThing()==null)	System.out.println(this.getName()+"A hozza tartozo lyuk"+holes.getName()+":	Zárva");
+			if(this.GetThing()==null)	System.out.println(this.getName()+"A hozza tartozo lyuk"+holes.getName()+":	Zarva");
 			else						System.out.println(this.getName()+"A hozza tartozo lyuk"+holes.getName()+"	Nyitva");
 		}
 	}
