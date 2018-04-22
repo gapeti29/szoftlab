@@ -61,6 +61,7 @@ public final class Game {
 	 */
 	public void addField(Field f) {
 		map.AddField(f);
+		f.SetWarehouse(map);
 	}
 
 	/**
