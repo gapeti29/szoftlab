@@ -61,7 +61,7 @@ public class Menu {
 			} catch (FileNotFoundException e) {
 				System.out.print("Nem létezik ilyen file!!!!");
 			}catch(NullPointerException e) {
-				//System.out.print("Üres sor!!!!");
+				//...
 			}
 	}
 	public static void drawMap() {}
@@ -102,11 +102,11 @@ public class Menu {
 		game.findCrate(name).SetField(game.findField(field));
 		game.findField(field).SetThing(game.findCrate(name));
 	}
-	public static void setOil(String field) {
-		game.findField(field).SetMaterial(new Oil());
+	public static void setOil(String name) {
+		game.findWorker(name).PutMaterial("Oil");
 	}
-	public static void setHoney(String field) {
-		game.findField(field).SetMaterial(new Honey());
+	public static void setHoney(String name) {
+		game.findWorker(name).PutMaterial("Honey");
 	}
 	public static void setField(String name) {
 		game.addField(new Field(name));

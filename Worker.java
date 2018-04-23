@@ -20,7 +20,7 @@ public class Worker extends MovableThing{
 	/**
 	 * A kenoanyagjai szama.
 	 */
-	private int materialCount;
+	private int materialCount = 3;
 	
 	/**
 	 * Letrehoz egy munkast a parameterul megadott nevvel es kenoanyagok szamaval.
@@ -108,6 +108,25 @@ public class Worker extends MovableThing{
 	 */
 	public boolean DirectPushedBy(Direction d, double s) {
 		return false;
+	}
+	
+	/**
+	 * A jatekos altal kivalasztott anyagot helyezi arra a mezore, amelyen eppen all.
+	 * A lerakas feltetele az, hogy meg nem fogyott ki a munkas az anyagokbol.
+	 * @param m String tipusu, a kivalasztott anyag neve.
+	 */
+	public void PutMaterial(String m) {
+		if(materialCount > 0) {
+			if(m.equals("Oil")) {
+				Oil oil = new Oil();
+				oil.PutOn(GetField());
+			}
+			else {
+				Honey honey = new Honey();
+				honey.PutOn(GetField());
+			}
+			--materialCount;
+		}
 	}
 	
 	/**
