@@ -106,7 +106,7 @@ public class Switch extends Field{
 			System.out.println(this.getName()+"	Nem tartozik hozzá lyuk");
 		}
 		else {
-			if(this.GetThing()==null)	System.out.println(this.getName()+"A hozza tartozo lyuk"+holes.getName()+":	Zárva");
+			if(!holes.IsOpen())	System.out.println(this.getName()+"A hozza tartozo lyuk"+holes.getName()+":	Zárva");
 			else						System.out.println(this.getName()+"A hozza tartozo lyuk"+holes.getName()+"	Nyitva");
 		}
 	}

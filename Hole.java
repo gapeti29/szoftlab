@@ -80,4 +80,10 @@ public class Hole extends Field {
 		if(isOpen)	System.out.println(this.getName()+"	Nyitva");
 		else		System.out.println(this.getName()+"	Zárva");
 	}
+	
+	/**
+	 * Visszaadja, hogy a lyuk nyitva van-e.
+	 * @return
+	 */
+	public boolean IsOpen() { return isOpen; }
 }
