@@ -57,14 +57,6 @@ public class Warehouse {
 	}
 
 	/**
-	 * Torli a parameterul kapott ladat.
-	 * @param c Crate tipusu.
-	 */
-	public void removeBox(Crate c) {
-		crates.remove(c);
-	}
-
-	/**
 	 * Torli a parameterul kapott munkast.
 	 * @param w Worker tipusu.
 	 */
@@ -128,8 +120,13 @@ public class Warehouse {
 	 * Kilistazza a ladak neveit.
 	 */
 	public void listBox() {
-		for(Crate c: crates)
-			System.out.println(c.GetField().getName());
+		if(crates.size() != 0) {
+			for(Crate c: crates)
+				System.out.println(c.GetField().getName());
+		}
+		else {
+			System.out.println("0 crate left.");
+		}
 	}
 
 	/**
