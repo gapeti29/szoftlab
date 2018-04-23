@@ -64,16 +64,12 @@ public class Worker extends MovableThing{
 	 * @return boolean tipussal ter vissza, mely akkor true, ha sikerult a mozgas.
 	 */
 	public boolean DirectMove(Direction d, double s) {
-		Field f = this.GetField();
 		if(GetField().GetNeighbour(d).DirectAccept(this, d, s))
 		{
-			f.SetThing(null);
 			return true;
 		}
 		else
-		{
 			return false;
-		}
 	}
 	
 	/**

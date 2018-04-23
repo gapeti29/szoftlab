@@ -156,7 +156,11 @@ public final class Game {
 	 */
 	public void listPoints() {
 		for(Worker w: workers) {
-			System.out.println("Player: "+w.GetName()+"	Field: "+w.GetField().getName()+" Points: "+w.GetPoints());
+			try {
+				System.out.println("Player: "+w.GetName()+"	Field: "+w.GetField().getName()+" Points: "+w.GetPoints());
+			}catch(NullPointerException e) {
+				System.out.println("Player: "+w.GetName()+"	Field: none Points: "+w.GetPoints());
+			}
 		}
 	}
 
@@ -166,8 +170,10 @@ public final class Game {
 	public void listRound() {
 		boolean zero_moves=true;
 		for(Worker w:workers) {
-			if(w.HasMoves()==true) {
-				zero_moves=false;
+			if(w.GetField() != null) {
+				if(w.HasMoves()==true) {
+					zero_moves=false;
+				}
 			}
 		}
 		if(zero_moves==true) {

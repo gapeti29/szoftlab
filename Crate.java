@@ -43,10 +43,10 @@ public class Crate extends MovableThing{
 	 * @return boolean tipusu, true ertekkel ter vissza, ha sikeres volt a mozgas.
 	 */
 	public boolean PushedBy(Direction d, double s)  {
-		s = s-(this.GetField().getCohesion());
-		//Csak akkor tolodik arrebb a lada, ha megfelelo erovel toljak, tehat meg pozitiv az s ero.
+		s = GetField().ApplyCohesion(s);
+		//Csak akkor tolódik arrébb a láda, ha megfelelõ erõvel tolják, tehát még pozitív az s erõ.
 		if(s > 0) {
-			return true;
+			return Move(d, s);
 		}
 		else {
 			return false;
@@ -59,9 +59,10 @@ public class Crate extends MovableThing{
 	 * @return boolean tipusu, true ertekkel ter vissza, ha sikeres volt a mozgas.
 	 */
 	public boolean DirectPushedBy(Direction d, double s) {
-		s = s-(this.GetField().getCohesion());
+		s = GetField().ApplyCohesion(s);
+		//Csak akkor tolódik arrébb a láda, ha megfelelõ erõvel tolják, tehát még pozitív az s erõ.
 		if(s > 0) {
-			return true;
+			return Move(d, s);
 		}
 		else {
 			return false;

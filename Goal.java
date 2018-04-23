@@ -22,38 +22,14 @@ public class Goal extends Field {
 	 * @param s double tipusu, a toloero.
 	 * @return boolean tipussal ter vissza, amely akkor true, ha elfogadta a MovableThing-et.
 	 */
-	public boolean DirectAccept(MovableThing t, Direction d, double s) {
-		if(t.DirectPushedBy(d, s)) {
-			this.CrateDelivered();
-			this.GetWarehouse().removeBox((Crate) t);
-			t.SetField(null);
-		}
-		else {
-			SetThing(t);
-			t.SetField(this);
-		}
-		return true;
-	}
-
-	/**
-	 * Megprobalja elfogadni a mezore erkezo MovableThing tipusu objektumot.
-	 * Ha sikerult, akkor meghivja annak a celmezore erkezest kezelo fuggvenyet.
-	 * @param t MovableThing tipusu, ez az objektum kerulne a mezore.
-	 * @param d Direction tipusu, ebbe az iranyba halad a parameterul kapott objektum.
-	 * @param s double tipusu, a toloero.
-	 * @return boolean tipussal ter vissza, amely akkor true, ha elfogadta a MovableThing-et.
-	 */
 	public boolean Accept(MovableThing t, Direction d, double s) {
-		if(t.DirectPushedBy(d, s)) {
-			this.CrateDelivered();
-			this.GetWarehouse().removeBox((Crate) t);
-			t.SetField(null);
+		if(super.Accept(t, d, s)) {
+			//Meghivja a celmezore erest kezelo fuggvenyet.
+			t.AtGoal(this);
+			return true;
 		}
-		else {
-			SetThing(t);
-			t.SetField(this);
-		}
-		return true;
+		else
+			return false;
 	}
 	
 	/**

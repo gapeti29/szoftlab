@@ -61,20 +61,18 @@ public class Field {
 	 * @return boolean tipussal ter vissza, mely akkor true, ha elfogadta a mezo az objektumot.
 	 */
 	public boolean Accept(MovableThing t, Direction d, double s) {
-		if(thing == null) {
-			thing = t;
-			thing.SetField(this);
-			return true;
+		if(thing != null) {
+			//Ha sikerult arrebb tolni a mezon levo dolgot.
+			if(thing.PushedBy(d, s)){
+				Accepted(t);
+				return true;
+			}
+			else
+				return false;
 		}
 		else {
-			if(this.GetNeighbour(d).Accept(thing, d, s-cohesion)) {
-				thing=t;
-				thing.SetField(this);
-				return true;
-			}else
-			{
-				return false;
-			}
+			Accepted(t);
+			return true;
 		}
 	}
 	
@@ -86,27 +84,38 @@ public class Field {
 	 * @return boolean tipussal ter vissza, mely akkor true, ha elfogadta a mezo az objektumot.
 	 */
 	public boolean DirectAccept(MovableThing t, Direction d, double s) {
-		if(thing == null) {
-			thing = t;
-			thing.SetField(this);
-			return true;
-		}
-		else {
-			if(thing.DirectPushedBy(d, s)) {
-				if(this.GetNeighbour(d).Accept(thing, d, s-cohesion)) {
-					thing=t;
-					thing.SetField(this);
-					return true;
-				}else
-				{
-					return false;
-				}
+		if(thing != null) {
+			//Ha sikerult arrebb tolni a mezon levo dolgot.
+			if(thing.DirectPushedBy(d, s)){
+				Accepted(t);
+				return true;
 			}
 			else
-			{
 				return false;
-			}
 		}
+		else {
+			Accepted(t);
+			return true;
+		}
+	}
+	
+	/**
+	 * A parameterul kapott dolog rakerulhet a mezore.
+	 * @param t MovableThing tipusu, ez az objektum kerul a mezore.
+	 */
+	private void Accepted(MovableThing t) {
+		//Regi mezorol torli az objektumot.
+		try {
+			t.GetField().Remove(t);
+		} catch(NullPointerException e) {
+			/*
+			 * Nem csinalunk semmit.
+			 * A kivetel azt jelzi, hogy a MovableThing t nem volt meg egy mezon se, most kerul a palyara.
+			 */
+		}
+		//Kolcsonosen eltaroljak egymast.
+		thing = t;
+		thing.SetField(this);
 	}
 	
 	/**
