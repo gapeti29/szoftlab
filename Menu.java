@@ -3,6 +3,13 @@ package sokoban;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * A tesztesetekhez tartozo bemeneti nyelvet megvalosito osztaly
+ * A kulönböző beallito és lekerdezo fuggvenyeket tartalmazza
+ * Az osztaly felel a szoveges fajlok kezeleseert is
+ * 
+ */
+
 public class Menu {
 	static Game game;
 	static ArrayList<String> commands;
@@ -21,6 +28,10 @@ public class Menu {
 			menu(line);
 		}
 	}
+/**
+ * A kulonbozo bemeneti parancsokat kezelo menu fuggveny. Feldolgozast vegez a bemeneti nyelv szerint
+ * @param split String[] tipusu, ez a bemeneti utasitas
+ */		
 	private static void menu(String[] split) throws IOException {
 		if(split[0].compareTo("loadMap")==0&&split.length==2){loadMap(split[1]);}
 		if(split[0].compareTo("saveMap")==0&&split.length==2){saveMap(split[1]);}
@@ -43,6 +54,11 @@ public class Menu {
 		if(split[0].compareTo("listPoints")==0&&split.length==1){listPoints();}
 		if(split[0].compareTo("pass")==0&&split.length==1){pass();}
 	}
+/**
+ * loadMap bemeneti utasitas, a fajlbol torteno bemenet beolvasasat vegzi, majd futtatja az ott talalhato utasitasokat
+ * @param file String[] tipusu, a bemeneti fajl eleresi utvonala
+ */	
+	
 	public static void loadMap(String file) throws IOException,NullPointerException {
 		System.out.println(System.getProperty("user.dir"));
 		BufferedReader br = null;
@@ -65,6 +81,10 @@ public class Menu {
 			}
 	}
 	public static void drawMap() {}
+/**
+ * A terkep elmentese szoveges fajlba
+ * @param file String[] tipusu, ebbe a fajlba menti el a terkepet/palyat
+ */		
 	public static void saveMap(String file) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(new FileOutputStream(file+".txt"));
 		int file_size=commands.size();
@@ -74,6 +94,13 @@ public class Menu {
 		}
 	    pw.close();
 	}
+	
+/**
+ * Egy munkas mozgatasa egy adott iranyba
+ * 
+ * @param direction String tipusu, ez adja meg az iranyt (fel-le-jobbra-balra)
+ * 
+ */	
 	public static void moveWorker(String direction) {
 		if(direction.compareTo("Up")==0)		game.currentPlayer().DirectMove(Direction.Up, game.currentPlayer().GetStrenght());
 		if(direction.compareTo("Down")==0)		game.currentPlayer().DirectMove(Direction.Down, game.currentPlayer().GetStrenght());
@@ -81,42 +108,105 @@ public class Menu {
 		if(direction.compareTo("Right")==0)		game.currentPlayer().DirectMove(Direction.Right, game.currentPlayer().GetStrenght());
 		Game.NextRound();
 	}
+
+/**
+ * Megadja, hogy van-e mozdithato lada a jatekban. “yes”-t ir ki, ha van s “no”-t ha nincs
+ */	
 	public static void canPush() {
 		if(game.canPush()==true) {System.out.println("Yes");}
 		else
 		{System.out.println("No");}
 	}
+/**
+ * Egy mezo szomszedjainak beallitasara szolgalo metodus
+ * 
+ * @param name String tipusu, megadja, hogy melyik mezonek a szomszedjat allitjuk be
+ * @param neighbour_name megadja a szomszed nevet
+ * @param direction String tipusu megadja a szomszed iranyat
+ */	
 	public static void setNeighbour(String name, String neighbour_name,String direction) {
 		if(direction.compareTo("Up")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Up);
 		if(direction.compareTo("Down")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Down);
 		if(direction.compareTo("Left")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Left);
 		if(direction.compareTo("Right")==0)	game.findField(name).SetNeighbour(game.findField(neighbour_name), Direction.Right);
 	}
+/**
+ * Egy munkas beallitasa egy mezore 
+ * 
+ * @param name String tipusu, megadja, hogy melyik munkasra allitjuk be
+ * @param field String tipusu, megadja a mezo nevet amelyikre a munkast rakjuk
+ * 
+ */		
 	public static void setWorker(String name,String field) {
 		game.addWorker(new Worker(name));
 		game.findWorker(name).SetField(game.findField(field));
 		game.findField(field).SetThing(game.findWorker(name));
 	}
+	
+/**
+ * Egy doboz beallitasa egy mezore 
+ * 
+ * @param name String tipusu, megadja, hogy melyik dobozt allitjuk be
+ * @param field String tipusu, megadja a mezo nevet amelyikre a dobozt rakjuk
+ * 
+ */		
 	public static void setBox(String name,String field) {
 		game.addCrate(new Crate(name));
 		game.findCrate(name).SetField(game.findField(field));
 		game.findField(field).SetThing(game.findCrate(name));
 	}
+
+/**
+ * Olaj kenoanyag beallitasa egy mezore 
+ * 
+ * @param name String tipusu, megadja, hogy hova tegyuk le a kenoanyagot
+ * 
+ */		
 	public static void setOil(String name) {
 		game.findWorker(name).PutMaterial("Oil");
 	}
+/**
+ * Mez kenoanyag beallitasa egy mezore 
+ * 
+ * @param name String tipusu, megadja, hogy hova tegyuk le a kenoanyagot
+ * 
+ */	
 	public static void setHoney(String name) {
 		game.findWorker(name).PutMaterial("Honey");
 	}
+/**
+ * Mezo letrehozasa 
+ * 
+ * @param name String tipusu, megadja, hogy milyen elnevezesu mezot akarunk letrehozni
+ * 
+ */	
 	public static void setField(String name) {
 		game.addField(new Field(name));
 	}
+/**
+ * Oszlop letrehozasa 
+ * 
+ * @param name String tipusu, megadja az oszlop megnevezeset
+ * 
+ */	
 	public static void setPillar(String name) {
 		game.addField(new Pillar(name));
 	}
+/**
+ * Celmezo letrehozasa 
+ * 
+ * @param name String tipusu, megadja a celmezo megnevezeset
+ * 
+ */	
 	public static void setGoal(String name) {
 		game.addField((Goal)new Goal(name));
 	}
+/**
+ * Lyuk beallitasa 
+ * @param name String tipusu, megadja a mezo adatait ahol a lyuk elhelyezkedik
+ * @param state String tipusu, megadja a lyuk allapotat, lehet nyitott vagy zart
+ * 
+ */		
 	public static void setHole(String name,String state) {
 		if(state.compareTo("closed")==0)
 			game.addField(new Hole(name,false));
@@ -126,6 +216,12 @@ public class Menu {
 		else
 			game.addField(new Hole(name,false));
 	}
+/**
+ * Kapcsolo beallitasa 
+ * @param name String tipusu, megadja a mezo adatait ahol a kapcsolo elhelyezkedik
+ * @param state String tipusu, megadja a kapcsolo allapotat
+ * @param hole String tipusu, megadja a lyuk elheyezkedeset
+ */		
 	public static void setSwitch(String name,String state,String hole) {
 		if(state.compareTo("off")==0)
 			game.addField(new Switch(name,false,hole));
@@ -135,21 +231,39 @@ public class Menu {
 		else
 			game.addField(new Switch(name,false,hole));
 	}
+/**
+ * Kilistazza a jatekban levo mezok allapotait (tipusait)
+ */		
 	public static void listFieldStates() {
 		game.listFieldState();
 	}
+/**
+ * Kilistazza a jatekban levo dobozokat
+ */		
 	public static void listBox() {
 		game.listBox();
 	}
+/**
+ * Kilistazza a jatekban levo munkasok aktualis pontszamat
+ */	
 	public static void listPoints() {
 		game.listPoints();
 	}
+/**
+ * A jatek inditasa ota eltelt korok szamat adja meg
+ */		
 	public static void listRound() {
 		game.listRound();
 	}
+/**
+ * A tapadast - melyeket a kenoanyagok valtoztathatnak - listazza ki
+ */	
 	public static void listCohesion() {
 		game.listCohesion();
 	}
+/**
+ * Passzolas, ilyenkor a kovetkezo korre ugrunk
+ */	
 	public static void pass() {
 		Game.NextRound();
 	}

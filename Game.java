@@ -194,6 +194,10 @@ public final class Game {
 	public void listCohesion() {
 		map.listCohesion();
 	}
+	
+	/**
+	 * Kilistazza a Field-ek allapotat.
+	 */
 	public void listFieldState() {
 		map.listFieldState();
 	}
