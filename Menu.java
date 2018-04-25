@@ -17,7 +17,7 @@ public class Menu{
 		commands = new ArrayList<String>();
 		loadMap("bemenet_01.txt");
 		game.drawMap();
-		game.locateWorkers();
+		game.locateThings();
 	}
 	/**
 	 * A kulonbozo bemeneti parancsokat kezelo menu fuggveny. Feldolgozast vegez a bemeneti nyelv szerint
@@ -140,8 +140,7 @@ public class Menu{
  * 
  */		
 	public static void setBox(String name,String field) {
-		game.addCrate(new Crate(name));
-		game.findCrate(name).SetField(game.findField(field));
+		game.addCrate(new Crate(name),field);
 		game.findField(field).SetThing(game.findCrate(name));
 	}
 
@@ -170,7 +169,7 @@ public class Menu{
  * 
  */	
 	public static void setField(String name) {
-		game.addField(new Field(name));
+		game.addField(new Field(name),"Field.jpg");
 	}
 /**
  * Oszlop letrehozasa 
@@ -179,7 +178,7 @@ public class Menu{
  * 
  */	
 	public static void setPillar(String name) {
-		game.addField(new Pillar(name));
+		game.addField(new Pillar(name),"Pillar.jpg");
 	}
 /**
  * Celmezo letrehozasa 
@@ -188,7 +187,7 @@ public class Menu{
  * 
  */	
 	public static void setGoal(String name) {
-		game.addField((Goal)new Goal(name));
+		game.addField((Goal)new Goal(name),"Goal.png");
 	}
 /**
  * Lyuk beallitasa 
@@ -198,12 +197,12 @@ public class Menu{
  */		
 	public static void setHole(String name,String state) {
 		if(state.compareTo("closed")==0)
-			game.addField(new Hole(name,false));
+			game.addField(new Hole(name,false),"Hole.png");
 		else
 		if(state.compareTo("open")==0)
-			game.addField(new Hole(name,true));
+			game.addField(new Hole(name,true),"Hole.png");
 		else
-			game.addField(new Hole(name,false));
+			game.addField(new Hole(name,false),"Hole.png");
 	}
 /**
  * Kapcsolo beallitasa 
@@ -213,12 +212,12 @@ public class Menu{
  */		
 	public static void setSwitch(String name,String state,String hole) {
 		if(state.compareTo("off")==0)
-			game.addField(new Switch(name,false,hole));
+			game.addField(new Switch(name,false,hole),"Switch.png");
 		else
 		if(state.compareTo("on")==0)
-			game.addField(new Switch(name,true,hole));
+			game.addField(new Switch(name,true,hole),"Switch.png");
 		else
-			game.addField(new Switch(name,false,hole));
+			game.addField(new Switch(name,false,hole),"Switch.png");
 	}
 /**
  * Kilistazza a jatekban levo mezok allapotait (tipusait)

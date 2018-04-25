@@ -5,6 +5,7 @@ import javax.swing.*;
 public class Map extends JFrame{
 	ArrayList<MyFieldJLabel> fields=new ArrayList<MyFieldJLabel>();
 	ArrayList<MyWorkerJLabel> workers=new ArrayList<MyWorkerJLabel>();
+	ArrayList<MyCrateJLabel> crates=new ArrayList<MyCrateJLabel>();
 	JFrame frame;
 	Warehouse warehouse;
 	Map(){
@@ -22,19 +23,23 @@ public class Map extends JFrame{
 				int key = e.getKeyCode();
 				if(key== KeyEvent.VK_UP) {
 					Menu.moveWorker("Up");
-					//locateWorkers();
+					locateWorkers();
+					locateCrates();
 				}
 				if(key== KeyEvent.VK_RIGHT) {
 					Menu.moveWorker("Right");
 					locateWorkers();
+					locateCrates();
 				}
 				if(key== KeyEvent.VK_DOWN) {
 					Menu.moveWorker("Down");
-					//locateWorkers();
+					locateWorkers();
+					locateCrates();
 				}
 				if(key== KeyEvent.VK_LEFT) {
 					Menu.moveWorker("Left");
 					locateWorkers();
+					locateCrates();
 				}
 			}
 			public void keyReleased(KeyEvent e) {}
@@ -44,42 +49,88 @@ public class Map extends JFrame{
 	public void setWarehouse(Warehouse w) {
 		warehouse=w;
 	}
-	public void addField(Field f) {
-		fields.add(new MyFieldJLabel(f));
+	public void addField(Field f,String image_name) {
+		fields.add(new MyFieldJLabel(f,image_name));
 	}
 	public void addWorker(Worker w) {
-		MyWorkerJLabel worker=new MyWorkerJLabel(w,this);
-		workers.add(worker);
+		workers.add(new MyWorkerJLabel(w,this));
 	}
-	public void addCrate() {
-		
+	public void addCrate(Crate c) {
+		crates.add(new MyCrateJLabel(c,this));
 	}
 	public void locateWorkers() {
 		int x=0,y=0;
 		for(MyWorkerJLabel worker:workers) {
-			for(MyFieldJLabel jl:fields) {
-				if(jl.getField()==worker.getWorker().GetField()) {
-					x=jl.getPositionX();
-					y=jl.getPositionY();
-					System.out.println(x+" , "+y);
+			if(worker.getHasBeenDrawn()==false) {
+				for(MyFieldJLabel jl:fields) {
+					if(jl.getField()==worker.getWorker().GetField()) {
+						x=jl.getPositionX();
+						y=jl.getPositionY();
+						System.out.println(x+" , "+y);
+					}
 				}
+				worker.setVisible(true);
+				worker.setEnabled(true);
+				worker.setBounds(x, y, 50, 50);
+				frame.add(worker);
+				frame.setComponentZOrder(worker, 0);
+				worker.repaint();
+				worker.setHasBeenDrawn(true);
+			}else {
+				for(MyFieldJLabel jl:fields) {
+					if(jl.getField()==worker.getWorker().GetField()) {
+						x=jl.getPositionX();
+						y=jl.getPositionY();
+						System.out.println(x+" , "+y);
+					}
+				}
+				worker.setBounds(x, y, 50, 50);
+				worker.repaint();
 			}
-			worker.setVisible(true);
-			worker.setEnabled(true);
-			worker.setBounds(x, y, 50, 50);
-			frame.add(worker);
-			frame.setComponentZOrder(worker, 0);
-			worker.repaint();
+		}
+	}
+	public void locateCrates() {
+		int x=0,y=0;
+		for(MyCrateJLabel crate:crates) {
+			if(crate.getHasBeenDrawn()==false) {
+				for(MyFieldJLabel jl:fields) {
+					if(jl.getField()==crate.getCrate().GetField()) {
+						x=jl.getPositionX();
+						y=jl.getPositionY();
+						System.out.println(x+" , "+y);
+					}
+				}
+				crate.setVisible(true);
+				crate.setEnabled(true);
+				crate.setBounds(x, y, 50, 50);
+				frame.add(crate);
+				frame.setComponentZOrder(crate, 0);
+				crate.repaint();
+				crate.setHasBeenDrawn(true);
+			}else {
+				for(MyFieldJLabel jl:fields) {
+					if(jl.getField()==crate.getCrate().GetField()) {
+						x=jl.getPositionX();
+						y=jl.getPositionY();
+						System.out.println(x+" , "+y);
+					}
+				}
+				crate.setBounds(x, y, 50, 50);
+				crate.repaint();
+			}
 		}
 	}
 	public void redrawMap() {
 		for(MyWorkerJLabel worker:workers) {
 			worker.redraw();
 		}
+		for(MyCrateJLabel crate:crates) {
+			crate.redraw();
+		}
 	}
 	public void buildMap() {
 		if(fields.size()>0) {
-			drawField(fields.get(0).getField(),300,300);
+			drawField(fields.get(0).getField(),300,450);
 		}
 	}
 	public void drawField(Field f,int x,int y) {
@@ -124,6 +175,18 @@ public class Map extends JFrame{
 				}
 			}
 		}
+	}
+	public void removeWorker(MovableThing m) {
+		System.out.println(workers.get(0).getWorker().getName());
+		for(int i=0;i<workers.size();i++) {
+			if(workers.get(i).getWorker().GetName()==m.getName()) {
+				workers.get(i).setVisible(false);
+				workers.remove(workers.get(i));
+			}
+		}
+	}
+	public void removeCrate(Crate c) {
+		
 	}
 
 }

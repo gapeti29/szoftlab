@@ -102,7 +102,7 @@ public class Field {
 	 * A parameterul kapott dolog rakerulhet a mezore.
 	 * @param t MovableThing tipusu, ez az objektum kerul a mezore.
 	 */
-	private void Accepted(MovableThing t) {
+	public void Accepted(MovableThing t) {
 		//Regi mezorol torli az objektumot.
 		try {
 			t.GetField().Remove(t);

@@ -19,10 +19,11 @@ public final class Game {
 	 * Munkasok referenciaja.
 	 */
 	private static ArrayList<Worker> workers=new ArrayList<Worker>();
+	private static ArrayList<Worker> dead_worker=new ArrayList<Worker>();
 	/**
 	 * Az aktualisan soron levo jatekos sorszama.
 	 */
-	private static int playersNumber = -1; 
+	private static int playersNumber = 0; 
 	private static Map visualMap;
 
 	/**
@@ -58,10 +59,10 @@ public final class Game {
 	 * A parameterul kapott mezot hozzaadja a palyahoz.
 	 * @param f Field tipusu.
 	 */
-	public void addField(Field f) {
+	public void addField(Field f,String image_name) {
 		map.AddField(f);
 		f.SetWarehouse(map);
-		visualMap.addField(f);
+		visualMap.addField(f,image_name);
 	}
 
 	/**
@@ -71,8 +72,6 @@ public final class Game {
 	public void addWorker(Worker w,String field) {
 		workers.add(w);
 		findWorker(w.GetName()).SetField(this.findField(field));
-		//System.out.println(this.findField(field).getName());
-		playersNumber++;
 		visualMap.addWorker(w);
 	}
 
@@ -80,8 +79,10 @@ public final class Game {
 	 * A parameterul kapott ladat hozzaadja a palyahoz.
 	 * @param c Crate tipusu.
 	 */
-	public void addCrate(Crate c) {
+	public void addCrate(Crate c,String field) {
 		map.AddCrate(c);
+		findCrate(c.getName()).SetField(findField(field));
+		visualMap.addCrate(c);
 	}
 
 	/**
@@ -89,7 +90,7 @@ public final class Game {
 	 * @return Worker tipussal ter vissza.
 	 */
 	public Worker currentPlayer() {
-		if(playersNumber>=0) {
+		if(workers.size()>0) {
 			return workers.get(playersNumber);
 		}
 		return null;
@@ -144,8 +145,14 @@ public final class Game {
 	 * Torli a parameterul kapott munkast.
 	 * @param w Worker tipusu.
 	 */
-	public static void removeWorker(Worker w) {
-		workers.remove(w);
+	public static void removeWorker(MovableThing m ){
+		visualMap.removeWorker(m);
+		System.out.println("Hello");
+		for(Worker w1:workers) {
+			dead_worker.add(w1);
+		}
+		workers.remove(m);
+		map.removeCrate(m);
 		playersNumber--;
 	}
 
@@ -209,8 +216,9 @@ public final class Game {
 	public void drawMap() {
 		visualMap.buildMap();
 	}
-	public void locateWorkers() {
+	public void locateThings() {
 		visualMap.locateWorkers();
+		visualMap.locateCrates();
 	}
 	public void redrawMap() {
 		visualMap.redrawMap();

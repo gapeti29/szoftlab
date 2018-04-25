@@ -1,0 +1,13 @@
+setField,f00
+setField,f01
+setHole,h01,closed
+setSwitch,s02,on,h01
+setNeighbour,f00,f01,Right
+setNeighbour,f01,f00,Left
+setNeighbour,f01,s02,Right
+setNeighbour,s02,f01,Left
+setNeighbour,s02,h01,Right
+setNeighbour,h01,s02,Left
+setWorker,w0,f00
+setBox,b0,f01
+setBox,b1,s02

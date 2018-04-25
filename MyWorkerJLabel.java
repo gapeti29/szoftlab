@@ -5,6 +5,7 @@ import javax.swing.*;
 public class MyWorkerJLabel extends JLabel{
 	private Worker worker;
 	private Map map;
+	private boolean hasBeenDrawn;
 	MyWorkerJLabel(Worker w,Map m){
 		map=m;
 		worker=w;
@@ -13,12 +14,19 @@ public class MyWorkerJLabel extends JLabel{
 		Image newimg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
 		img = new ImageIcon(newimg); 
 		this.setIcon(img);
+		hasBeenDrawn=false;
 	}
 	public Worker getWorker() {
 		return worker;
 	}
 	public void redraw() {
 		this.repaint();
+	}
+	public boolean getHasBeenDrawn() {
+		return hasBeenDrawn;
+	}
+	public void setHasBeenDrawn(boolean arg) {
+		hasBeenDrawn=arg;
 	}
 }
 

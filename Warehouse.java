@@ -41,8 +41,8 @@ public class Warehouse {
 	 * Egy lada megszunt valamilyen okbol.
 	 * @param c Crate tipusu, ez a lada szunt meg.
 	 */
-	public void CrateRemoved(Crate c) {
-		crates.remove(c);
+	public void removeCrate(MovableThing m) {
+		crates.remove(m);
 	}
 	
 	/**

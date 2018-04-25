@@ -8,11 +8,11 @@ public class MyFieldJLabel extends JLabel {
 	private Field field;
 	private boolean hasBeenDrawn;
 	private int positionX,positionY;
-	MyFieldJLabel(Field f){
+	MyFieldJLabel(Field f,String image_name){
 		field=f;
 		hasBeenDrawn=false;
 		this.setBackground(Color.blue);
-		ImageIcon img = new ImageIcon("Field.jpg");
+		ImageIcon img = new ImageIcon(image_name);
 		Image image = img.getImage();
 		Image newimg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
 		img = new ImageIcon(newimg); 

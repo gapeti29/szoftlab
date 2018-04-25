@@ -47,14 +47,16 @@ public class Hole extends Field {
 	public boolean Accept(MovableThing t, Direction d, double s) {
 		if(super.Accept(t, d, s)) {
 			if(isOpen) {
+				Game.removeWorker(t);
 				t.Disappear();
+			}else {
+				Accepted(t);
 			}
 			return true;
 		}
 		else
 			return false;
 	}
-	
 	/**
 	 * Kiertekeli, hogy a lyukra lephet-e a MovableThing (ami elvileg egy Worker lesz), es ha igen, akkor megsemmisiti, ha a lyuk nyitva van. 
 	 * @param t MovableThing tipusu, ez az objektum lep a mezore (es adott esetben semmisul meg).
@@ -65,7 +67,11 @@ public class Hole extends Field {
 	public boolean DirectAccept(MovableThing t, Direction d, double s) {
 		if(super.DirectAccept(t, d, s)) {
 			if(isOpen) {
+				Game.removeWorker(t);
 				t.Disappear();
+			}
+			else {
+				Accepted(t);
 			}
 			return true;
 		}

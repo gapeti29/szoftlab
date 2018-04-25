@@ -24,7 +24,7 @@ public class Crate extends MovableThing{
 	 * null ertekre allitja a tarolt mezo erteket.
 	 */
 	public void Disappear() {
-		GetField().GetWarehouse().CrateRemoved(this);
+		GetField().GetWarehouse().removeCrate(this);
 		GetField().Remove(this);
 		SetField(null);
 	}
