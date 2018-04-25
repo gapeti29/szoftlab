@@ -1,5 +1,3 @@
-package sokoban;
-
 import java.util.ArrayList;
 
 /**
@@ -25,6 +23,7 @@ public final class Game {
 	 * Az aktualisan soron levo jatekos sorszama.
 	 */
 	private static int playersNumber = -1; 
+	private static Map visualMap;
 
 	/**
 	 * Megkeresi a munkast a parameterul kapott neve alapjan, es azt vissza is adja.
@@ -62,15 +61,19 @@ public final class Game {
 	public void addField(Field f) {
 		map.AddField(f);
 		f.SetWarehouse(map);
+		visualMap.addField(f);
 	}
 
 	/**
 	 * A parameterul kapott munkast eltarolja.
 	 * @param w Worker tipusu.
 	 */
-	public void addWorker(Worker w) {
+	public void addWorker(Worker w,String field) {
 		workers.add(w);
+		findWorker(w.GetName()).SetField(this.findField(field));
+		//System.out.println(this.findField(field).getName());
 		playersNumber++;
+		visualMap.addWorker(w);
 	}
 
 	/**
@@ -120,6 +123,8 @@ public final class Game {
 	 */
 	public static void CreateMap() {
 		map = new Warehouse();
+		visualMap=new Map();
+		visualMap.setWarehouse(map);
 	}
 	
 	/**
@@ -201,5 +206,13 @@ public final class Game {
 	public void listFieldState() {
 		map.listFieldState();
 	}
-
+	public void drawMap() {
+		visualMap.buildMap();
+	}
+	public void locateWorkers() {
+		visualMap.locateWorkers();
+	}
+	public void redrawMap() {
+		visualMap.redrawMap();
+	}
  }

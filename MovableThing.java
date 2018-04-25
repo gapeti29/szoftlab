@@ -1,4 +1,4 @@
-package sokoban;
+
 
 /**
  * Absztrakt ososztaly, amely a jatekban talalhato mozgo dolgokat foglalja magaba.
@@ -52,5 +52,7 @@ public abstract class MovableThing {
 	 * Visszaadja a MovableThing nevet.
 	 * @return String tipussal ter vissza.
 	 */
-	public String getName() {return name;}
+	public String getName() {
+		return name;
+	}
 }

@@ -1,4 +1,4 @@
-package sokoban;
+
 
 /**
  * A palyan elhelyezkedo oszlopot reprezentalo osztaly.

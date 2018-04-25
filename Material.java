@@ -1,4 +1,4 @@
-package sokoban;
+
 
 /**
  * Absztrakt ososztaly, a mezokon elhelyezheto kenoanyagokat foglalja magaban.

@@ -1,4 +1,4 @@
-package sokoban;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,7 +85,6 @@ public class Field {
 	 */
 	public boolean DirectAccept(MovableThing t, Direction d, double s) {
 		if(thing != null) {
-			//Ha sikerult arrebb tolni a mezon levo dolgot.
 			if(thing.DirectPushedBy(d, s)){
 				Accepted(t);
 				return true;

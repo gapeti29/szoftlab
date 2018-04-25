@@ -1,4 +1,3 @@
-package sokoban;
 
 /**
  * A jatekosok altal iranyitott munkas.
@@ -66,6 +65,7 @@ public class Worker extends MovableThing{
 	public boolean DirectMove(Direction d, double s) {
 		if(GetField().GetNeighbour(d).DirectAccept(this, d, s))
 		{
+			
 			return true;
 		}
 		else

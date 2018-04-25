@@ -1,37 +1,28 @@
-package sokoban;
-
 import java.io.*;
 import java.util.ArrayList;
 
 /**
  * A tesztesetekhez tartozo bemeneti nyelvet megvalosito osztaly
- * A kul√∂nb√∂z≈ë beallito √©s lekerdezo fuggvenyeket tartalmazza
+ * A kulˆnbˆzı beallito Ès lekerdezo fuggvenyeket tartalmazza
  * Az osztaly felel a szoveges fajlok kezeleseert is
  * 
  */
 
-public class Menu {
+public class Menu{
 	static Game game;
 	static ArrayList<String> commands;
 	public static void main(String[] args) throws IOException {
 		game=new Game();
-		commands = new ArrayList<String>();
 		Game.CreateMap();
-		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
-		while(true) {
-			String input=reader.readLine();
-			String[] line=input.split(",");
-			if(line[0].compareTo("loadMap")==0||line[0].compareTo("saveMap")==0) {}
-			else {
-				commands.add(input);
-			}
-			menu(line);
-		}
+		commands = new ArrayList<String>();
+		loadMap("bemenet_01.txt");
+		game.drawMap();
+		game.locateWorkers();
 	}
-/**
- * A kulonbozo bemeneti parancsokat kezelo menu fuggveny. Feldolgozast vegez a bemeneti nyelv szerint
- * @param split String[] tipusu, ez a bemeneti utasitas
- */		
+	/**
+	 * A kulonbozo bemeneti parancsokat kezelo menu fuggveny. Feldolgozast vegez a bemeneti nyelv szerint
+	 * @param split String[] tipusu, ez a bemeneti utasitas
+	 */		
 	private static void menu(String[] split) throws IOException {
 		if(split[0].compareTo("loadMap")==0&&split.length==2){loadMap(split[1]);}
 		if(split[0].compareTo("saveMap")==0&&split.length==2){saveMap(split[1]);}
@@ -75,12 +66,11 @@ public class Menu {
 		    }
 			br.close();
 			} catch (FileNotFoundException e) {
-				System.out.print("Nem l√©tezik ilyen file!!!!");
+				System.out.print("Nem lÈtezik ilyen file!!!!");
 			}catch(NullPointerException e) {
 				//...
 			}
 	}
-	public static void drawMap() {}
 /**
  * A terkep elmentese szoveges fajlba
  * @param file String[] tipusu, ebbe a fajlba menti el a terkepet/palyat
@@ -110,7 +100,7 @@ public class Menu {
 	}
 
 /**
- * Megadja, hogy van-e mozdithato lada a jatekban. ‚Äúyes‚Äù-t ir ki, ha van s ‚Äúno‚Äù-t ha nincs
+ * Megadja, hogy van-e mozdithato lada a jatekban. ìyesî-t ir ki, ha van s ìnoî-t ha nincs
  */	
 	public static void canPush() {
 		if(game.canPush()==true) {System.out.println("Yes");}
@@ -138,8 +128,7 @@ public class Menu {
  * 
  */		
 	public static void setWorker(String name,String field) {
-		game.addWorker(new Worker(name));
-		game.findWorker(name).SetField(game.findField(field));
+		game.addWorker(new Worker(name),field);
 		game.findField(field).SetThing(game.findWorker(name));
 	}
 	

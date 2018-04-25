@@ -1,4 +1,4 @@
-package sokoban;
+
 
 /**
  * A lyukak allapotat vezerlo elem.

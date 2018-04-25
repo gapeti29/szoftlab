@@ -1,4 +1,4 @@
-package sokoban;
+
 
 /**
  * A jatek celmezoje, ide kell eljuttatni a ladakat.
