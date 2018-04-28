@@ -1,3 +1,4 @@
+package sokoban;
 
 import java.awt.Color;
 import java.awt.Image;

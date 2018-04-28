@@ -1,4 +1,4 @@
-
+package sokoban;
 
 /**
  * A mezore helyezheto osztaly, amely csokkenti a mezo tapadasat.

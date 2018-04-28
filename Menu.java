@@ -1,3 +1,5 @@
+package sokoban;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -52,7 +54,8 @@ public class Menu{
 		System.out.println(System.getProperty("user.dir"));
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader(file));
+			FileReader fr = new FileReader(file);
+			br = new BufferedReader(fr);
 			String line=br.readLine();
 			String[] split = line.split(",");
 		    while (line!=null) {

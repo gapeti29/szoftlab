@@ -1,4 +1,4 @@
-
+package sokoban;
 
 /**
  * Absztrakt ososztaly, amely a jatekban talalhato mozgo dolgokat foglalja magaba.

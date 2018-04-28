@@ -1,4 +1,4 @@
-
+package sokoban;
 
 /**
  * Egy felsorolasban (Enumeration) tartja nyilvan az iranyokat.

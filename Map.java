@@ -1,3 +1,5 @@
+package sokoban;
+
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.*;
@@ -237,7 +239,7 @@ public class Map extends JFrame{
 	}
 	public void removeCrate(Crate c) {
 		for(int i=0;i<crates.size();i++) {
-			if(crates.get(i).getCrate().getName()==c.getName()) {
+			if(crates.get(i).getCrate() == c) {
 				crates.get(i).setVisible(false);
 				crates.remove(crates.get(i));
 			}

@@ -1,4 +1,4 @@
-
+package sokoban;
 
 /**
  * A lada nyilvantartja, hogy eppen melyik mezon all.

@@ -1,3 +1,4 @@
+package sokoban;
 
 /**
  * A jatekosok altal iranyitott munkas.

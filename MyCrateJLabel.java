@@ -1,3 +1,5 @@
+package sokoban;
+
 import java.awt.Image;
 
 import javax.swing.*;

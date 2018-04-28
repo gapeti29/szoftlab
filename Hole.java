@@ -1,4 +1,4 @@
-
+package sokoban;
 
 /**
  *A lyuk mezore kerulo munkasokat, es az ide tolt ladakat megsemmisiti, igy azok eltunnek a jatekbol.
