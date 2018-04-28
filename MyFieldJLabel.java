@@ -5,19 +5,18 @@ import java.awt.Image;
 import javax.swing.*;
 
 public class MyFieldJLabel extends JLabel {
-	private Field field;
-	private boolean hasBeenDrawn;
+	protected Field field;
+	protected boolean hasBeenDrawn;
 	private int positionX,positionY;
 	MyFieldJLabel(Field f,String image_name){
 		field=f;
 		hasBeenDrawn=false;
-		this.setBackground(Color.blue);
+		this.setOpaque(true);
 		ImageIcon img = new ImageIcon(image_name);
 		Image image = img.getImage();
 		Image newimg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
 		img = new ImageIcon(newimg); 
 		this.setIcon(img);
-
 	}
 	MyFieldJLabel(){
 		hasBeenDrawn=false;
@@ -42,5 +41,17 @@ public class MyFieldJLabel extends JLabel {
 	}
 	public int getPositionY() {
 		return positionY;
+	}
+	public void reDraw() {
+		if(field.getCohesion()==0) {
+		}
+		else{
+			if(field.getCohesion()>0) {
+				this.setBackground(Color.darkGray);
+			}	
+			if(field.getCohesion()<0) {
+				this.setBackground(Color.yellow);
+			}
+		}
 	}
 }

@@ -28,5 +28,4 @@ public class MyCrateJLabel extends JLabel{
 	public void setHasBeenDrawn(boolean arg) {
 		hasBeenDrawn=arg;
 	}
-
 }

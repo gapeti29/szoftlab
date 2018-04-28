@@ -20,6 +20,7 @@ public final class Game {
 	 */
 	private static ArrayList<Worker> workers=new ArrayList<Worker>();
 	private static ArrayList<Worker> dead_worker=new ArrayList<Worker>();
+	static ArrayList<Worker> allWorker=new ArrayList<Worker>();
 	/**
 	 * Az aktualisan soron levo jatekos sorszama.
 	 */
@@ -73,6 +74,7 @@ public final class Game {
 		workers.add(w);
 		findWorker(w.GetName()).SetField(this.findField(field));
 		visualMap.addWorker(w);
+		allWorker.add(w);
 	}
 
 	/**
@@ -89,7 +91,7 @@ public final class Game {
 	 * Visszaadja az aktualisan soron levo munkast.
 	 * @return Worker tipussal ter vissza.
 	 */
-	public Worker currentPlayer() {
+	public static Worker currentPlayer() {
 		if(workers.size()>0) {
 			return workers.get(playersNumber);
 		}
@@ -116,6 +118,9 @@ public final class Game {
 			playersNumber = 0;
 			round++;
 		}
+		visualMap.setCurrentPlayer(workers.get(playersNumber).getName());
+		visualMap.setRound(round);
+		visualMap.setScoreBoard(allWorker);
 	}
 
 	/**
@@ -145,17 +150,18 @@ public final class Game {
 	 * Torli a parameterul kapott munkast.
 	 * @param w Worker tipusu.
 	 */
-	public static void removeWorker(MovableThing m ){
-		visualMap.removeWorker(m);
-		System.out.println("Hello");
-		for(Worker w1:workers) {
-			dead_worker.add(w1);
-		}
-		workers.remove(m);
-		map.removeCrate(m);
+	public static void removeWorker(Worker w ){
+		visualMap.removeWorker(w);
+		dead_worker.add(w);
+		workers.remove(w);
+	}
+	public static void removeCrate(Crate c ){
+		visualMap.removeCrate(c);
+		map.removeCrate(c);
+	}
+	public static void reducePlayerNumber() {
 		playersNumber--;
 	}
-
 	/**
 	 * Kilistazza azokat a mezoket, melyeken dobozok allnak.
 	 */

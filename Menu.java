@@ -10,11 +10,9 @@ import java.util.ArrayList;
 
 public class Menu{
 	static Game game;
-	static ArrayList<String> commands;
 	public static void main(String[] args) throws IOException {
 		game=new Game();
 		Game.CreateMap();
-		commands = new ArrayList<String>();
 		loadMap("bemenet_01.txt");
 		game.drawMap();
 		game.locateThings();
@@ -31,8 +29,8 @@ public class Menu{
 		if(split[0].compareTo("setNeighbour")==0&&split.length==4){setNeighbour(split[1],split[2],split[3]);}
 		if(split[0].compareTo("setWorker")==0&&split.length==3){setWorker(split[1],split[2]);}
 		if(split[0].compareTo("setBox")==0&&split.length==3){setBox(split[1],split[2]);}
-		if(split[0].compareTo("setOil")==0&&split.length==2){setOil(split[1]);}
-		if(split[0].compareTo("setHoney")==0&&split.length==2){setHoney(split[1]);}
+		if(split[0].compareTo("setOil")==0&&split.length==1){setOil();}
+		if(split[0].compareTo("setHoney")==0&&split.length==1){setHoney();}
 		if(split[0].compareTo("setField")==0&&split.length==2){setField(split[1]);}
 		if(split[0].compareTo("setGoal")==0&&split.length==2){setGoal(split[1]);}
 		if(split[0].compareTo("setPillar")==0&&split.length==2){setPillar(split[1]);}
@@ -60,7 +58,6 @@ public class Menu{
 		    while (line!=null) {
 				System.out.println(line);
 		    	menu(split);
-				commands.add(line);
 		    	line=br.readLine();
 			    split = line.split(",");
 		    }
@@ -76,13 +73,7 @@ public class Menu{
  * @param file String[] tipusu, ebbe a fajlba menti el a terkepet/palyat
  */		
 	public static void saveMap(String file) throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter(new FileOutputStream(file+".txt"));
-		int file_size=commands.size();
-		for(int i=0;i<file_size;i++)
-		{
-			pw.println(commands.remove(0));
-		}
-	    pw.close();
+		
 	}
 	
 /**
@@ -150,8 +141,8 @@ public class Menu{
  * @param name String tipusu, megadja, hogy hova tegyuk le a kenoanyagot
  * 
  */		
-	public static void setOil(String name) {
-		game.findWorker(name).PutMaterial("Oil");
+	public static void setOil() {
+		game.currentPlayer().PutMaterial(new Oil());
 	}
 /**
  * Mez kenoanyag beallitasa egy mezore 
@@ -159,8 +150,8 @@ public class Menu{
  * @param name String tipusu, megadja, hogy hova tegyuk le a kenoanyagot
  * 
  */	
-	public static void setHoney(String name) {
-		game.findWorker(name).PutMaterial("Honey");
+	public static void setHoney() {
+		game.currentPlayer().PutMaterial(new Honey());
 	}
 /**
  * Mezo letrehozasa 
@@ -169,7 +160,7 @@ public class Menu{
  * 
  */	
 	public static void setField(String name) {
-		game.addField(new Field(name),"Field.jpg");
+		game.addField(new Field(name),"Field.png");
 	}
 /**
  * Oszlop letrehozasa 
@@ -187,7 +178,7 @@ public class Menu{
  * 
  */	
 	public static void setGoal(String name) {
-		game.addField((Goal)new Goal(name),"Goal.png");
+		game.addField(new Goal(name),"Goal.png");
 	}
 /**
  * Lyuk beallitasa 
@@ -197,12 +188,12 @@ public class Menu{
  */		
 	public static void setHole(String name,String state) {
 		if(state.compareTo("closed")==0)
-			game.addField(new Hole(name,false),"Hole.png");
+			game.addField(new Hole(name,false),"Hole_closed.png");
 		else
 		if(state.compareTo("open")==0)
-			game.addField(new Hole(name,true),"Hole.png");
+			game.addField(new Hole(name,true),"Hole_open.png");
 		else
-			game.addField(new Hole(name,false),"Hole.png");
+			game.addField(new Hole(name,false),"Hole_closed.png");
 	}
 /**
  * Kapcsolo beallitasa 

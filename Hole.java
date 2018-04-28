@@ -47,7 +47,6 @@ public class Hole extends Field {
 	public boolean Accept(MovableThing t, Direction d, double s) {
 		if(super.Accept(t, d, s)) {
 			if(isOpen) {
-				Game.removeWorker(t);
 				t.Disappear();
 			}else {
 				Accepted(t);
@@ -67,7 +66,6 @@ public class Hole extends Field {
 	public boolean DirectAccept(MovableThing t, Direction d, double s) {
 		if(super.DirectAccept(t, d, s)) {
 			if(isOpen) {
-				Game.removeWorker(t);
 				t.Disappear();
 			}
 			else {

@@ -77,8 +77,10 @@ public class Worker extends MovableThing{
 	 * null ertekre allitja a tarolt mezo erteket.
 	 */
 	public void Disappear() {
+		Game.removeWorker(this);
 		GetField().Remove(this);
 		SetField(null);
+		Game.reducePlayerNumber();
 	}
 	
 	/**
@@ -115,16 +117,9 @@ public class Worker extends MovableThing{
 	 * A lerakas feltetele az, hogy meg nem fogyott ki a munkas az anyagokbol.
 	 * @param m String tipusu, a kivalasztott anyag neve.
 	 */
-	public void PutMaterial(String m) {
+	public void PutMaterial(Material m) {
 		if(materialCount > 0) {
-			if(m.equals("Oil")) {
-				Oil oil = new Oil();
-				oil.PutOn(GetField());
-			}
-			else {
-				Honey honey = new Honey();
-				honey.PutOn(GetField());
-			}
+			m.PutOn(this.GetField());
 			--materialCount;
 		}
 	}
